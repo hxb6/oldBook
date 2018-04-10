@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxb.oldbook.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.hxb.oldbook.pojo.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_account" jdbcType="CHAR" property="userAccount" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role_type" jdbcType="TINYINT" property="roleType" />
+    <result column="is_merchant" jdbcType="BIT" property="isMerchant" />
+    <result column="user_register_time" jdbcType="TIMESTAMP" property="userRegisterTime" />
+    <result column="register_merchant_time" jdbcType="TIMESTAMP" property="registerMerchantTime" />
+    <result column="user_modified_time" jdbcType="TIMESTAMP" property="userModifiedTime" />
+  </resultMap>
+</mapper>

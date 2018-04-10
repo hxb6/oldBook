@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxb.oldbook.mapper.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hxb.oldbook.pojo.BookInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="book_price" jdbcType="DECIMAL" property="bookPrice" />
+    <result column="book_save" jdbcType="SMALLINT" property="bookSave" />
+    <result column="book_introduction" jdbcType="VARCHAR" property="bookIntroduction" />
+    <result column="book_varety_id" jdbcType="INTEGER" property="bookVaretyId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_create_time" jdbcType="TIMESTAMP" property="bookCreateTime" />
+    <result column="book_modified-time" jdbcType="TIMESTAMP" property="bookModifiedTime" />
+  </resultMap>
+</mapper>

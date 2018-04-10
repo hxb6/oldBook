@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动:选择本地硬盘上面的数据库驱动包-->
+    <classPathEntry  location="D:\MysqlConnetionForMybatisGenerate\mysql-connector-java-5.1.40.jar"/>
+    <context id="Mysql"  targetRuntime="MyBatis3Simple">
+        <!-- 设置编码格式 防止中文乱码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        
+        <!-- 通用Mapper插件 -->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+        </plugin>
+
+        <commentGenerator>
+            <!-- 是否禁止显示日期 true:是  false:否 -->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 自动生成的注释没有参考价值-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://127.0.0.1/old_book"
+                userId="root"
+                password="123456">
+        </jdbcConnection>
+
+        <!-- 生成pojo类的包名和位置-->
+        <javaModelGenerator targetPackage="com.hxb.oldbook.pojo" targetProject="src/main/java">
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName
+                即 包名.数据库名.表名 设置不允许
+            -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 对数据库查询结果进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成mapper映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- mapper接口生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hxb.oldbook.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table tableName="%">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

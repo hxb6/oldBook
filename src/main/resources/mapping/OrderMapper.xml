@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxb.oldbook.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.hxb.oldbook.pojo.Order">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="seller_id" jdbcType="INTEGER" property="sellerId" />
+    <result column="buyers_id" jdbcType="INTEGER" property="buyersId" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="order_create_time" jdbcType="TIMESTAMP" property="orderCreateTime" />
+    <result column="order_modified_time" jdbcType="TIMESTAMP" property="orderModifiedTime" />
+  </resultMap>
+</mapper>
