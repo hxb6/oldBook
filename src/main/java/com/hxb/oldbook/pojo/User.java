@@ -18,13 +18,13 @@ public class User {
     private String userAccount;
 
     /**
-     * 用户姓名(2~3个汉字) 默认为 xx同学 
+     * 用户姓名(2~3个汉字) 默认为 xx同学
      */
     @Column(name = "user_name")
     private String userName;
 
     /**
-     * 用户密码 
+     * 用户密码 (md5加密)
      */
     private String password;
 
@@ -95,36 +95,36 @@ public class User {
     }
 
     /**
-     * 获取用户姓名(2~3个汉字) 默认为 xx同学 
+     * 获取用户姓名(2~3个汉字) 默认为 xx同学
      *
-     * @return user_name - 用户姓名(2~3个汉字) 默认为 xx同学 
+     * @return user_name - 用户姓名(2~3个汉字) 默认为 xx同学
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     * 设置用户姓名(2~3个汉字) 默认为 xx同学 
+     * 设置用户姓名(2~3个汉字) 默认为 xx同学
      *
-     * @param userName 用户姓名(2~3个汉字) 默认为 xx同学 
+     * @param userName 用户姓名(2~3个汉字) 默认为 xx同学
      */
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
     }
 
     /**
-     * 获取用户密码 
+     * 获取用户密码 (md5加密)
      *
-     * @return password - 用户密码 
+     * @return password - 用户密码 (md5加密)
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * 设置用户密码 
+     * 设置用户密码 (md5加密)
      *
-     * @param password 用户密码 
+     * @param password 用户密码 (md5加密)
      */
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
