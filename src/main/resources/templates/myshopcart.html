@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>我的购物车</title>
+	<!--bootstrap的css-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--自定义css-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+</head>
+<body>
+    <script src="js/publicPage/top.js"></script>
+    <div class="container">
+        <!--内容区-->
+        <script src="js/publicPage/search.js"></script><!--搜索按钮-->
+        
+        <!--面包屑-->
+        <div class="breadcrumb">
+        	<li><a href="javascript:void(0)">MMall</a><span class="divider">></span></li>
+        	<li class="active">我的购物车</li>
+        </div>
+        
+        <div class="shopCart">
+        	<p class="Ordersure-span">
+        		<span class="shopCarta">
+        			<input type="checkbox" class="allNews" checked>全选</span>
+        		<span class="shopCartb">商品描述</span>
+        		<span class="shopCartc">单价</span>
+        		<span class="shopCartc">数量</span>
+        		<span class="shopCartc">合计</span>
+        	    <span class="shopCartc">操作</span></p>
+        	<p class="Ordersure-spantwo Order1">
+        		<span class="shopCarta">
+        			<input type="checkbox" class="oneNews nornum1" checked  disabled="disabled"></span>
+        		<span class="shopCartb"><img src="images/order-new.jpg"><span>Apple iPhone 8 Plus 64GB 金色 移动联通电信4G手机</span></span>
+        		<span class="shopCartc unitPrice1">￥7000</span>
+        		<span class="shopCartc">
+					  <input type="button" class="numre numReduce1" value="-" onclick="numRedu(1)" >
+					  <input type="number" class="numte numText1" value="1" max="10000" onkeyup="numText(1)">
+					  <input type="button" class="numad numAdd1" value="+" onclick="numAdd(1)">
+        		</span>
+        		<span class="shopCartc unitTotal unitTotal1">￥7000</span>
+        		<span class="shopCartc">删除</span>
+        	</p>
+        	<p class="Ordersure-spantwo Order2">
+        		<span class="shopCarta">
+        			<input type="checkbox" class="oneNews nornum2" checked readonly="readonly"  disabled="disabled" ></span>
+        		<span class="shopCartb"><img src="images/order-new.jpg"><span>Apple iPhone 8 Plus 64GB 金色 移动联通电信4G手机</span></span>
+        		<span class="shopCartc unitPrice2">￥7000</span>
+        		<span class="shopCartc">
+					  <input type="button" class="numre numReduce2" value="-" onclick="numRedu(2)" >
+					  <input type="number" class="numte numText2" value="1" max="10000" onkeyup="numText(2)">
+					  <input type="button" class="numad numAdd2" value="+" onclick="numAdd(2)">
+        		</span>
+        		<span class="shopCartc unitTotal unitTotal2">￥7000</span>
+        		<span class="shopCartc">删除</span>
+        	</p>
+        		
+        	<p class="shopCart-bottom">
+        		<span>
+        			<!--<span class="shopCarta">
+        			<input type="checkbox" class="allNews">全选</span>-->
+        			<span class="shopCartd"><i class="glyphicon glyphicon-trash"></i>删除选中</span>
+        		</span>
+        		<span class="shopCart-bottomleft">
+        		总价：<span style="color: #c60023;" class="countNum">￥1400</span>
+        		<a class="btn search-btn" href="ordersure.html">去结算</a>
+        		</span>
+        	</p>
+        </div>
+        <div class="lgfooter">#XXXXXX版权所有#</div>
+    </div>
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    var c,d;
+    function money(){
+    	 var w=$(".unitTotal").text().split("￥");
+	     var r = eval(w.join('+'));
+	     $(".countNum").text("￥"+ r);
+    }
+	function numRedu(numa){
+		numa=parseInt(numa);
+		var a=parseInt($(".numText"+numa).val());
+		if(a>1){ a=a-1;}
+		else if(a=1){$(".Order"+numa).remove(); console.log(1);}
+		else{return 0;}
+		$(".numText"+numa).val(a);
+	    c=parseInt($(".unitPrice"+numa).text().slice(1));
+	    $(".unitTotal"+numa).text("￥"+c*a);
+	    money();
+	}
+	function numAdd(numb){
+		numb=parseInt(numb); 
+		var b=parseInt($(".numText"+numb).val());
+			if(b<9999){b=b+1;}
+	    $(".numText"+numb).val(b);
+	    d=parseInt($(".unitPrice"+numb).text().slice(1));
+	    $(".unitTotal"+numb).text("￥"+d*b);
+	     money();
+	}
+	
+	function numText(numc){
+		numc=parseInt(numc);
+		var x=$(".numText"+numc).val();
+		$(".numText"+numc).val(x.slice(0,4));
+		z=parseInt($(".unitPrice"+numc).text().slice(1));
+	    $(".unitTotal"+numc).text("￥"+x*z);
+	}
+	
+	$(".allNews").click(function(){
+	  var j=$(".oneNews");
+	   if($(".allNews").is(':checked')) {
+		  for(var i = 0; i < j.length; i++) {
+			j[i].checked = true;
+			money();
+		}
+		} else {
+		  for(var i = 0; i < j.length; i++) {
+			j[i].checked = false;
+			 $(".countNum").text("￥0");
+		}
+	   }
+	}); 
+</script>
+</html>

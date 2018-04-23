@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>订单确认</title>
+	<!--bootstrap的css-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<!--自定义css-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+</head>
+<body>
+	<!--<div class="container-fluid">
+        <div class="row index-top-box">
+            <div class="index-top clearfix">
+                <div class="pull-left">
+                    <span>欢迎，admin</span>&nbsp;<a href="###">退出</a>
+                </div>
+                <div class="pull-right">
+                    <ul>
+                        <li>
+                            <a href="###"><img src="images/car.png" alt="car.png">&nbsp;购物车(0)</a>
+                        </li>
+                        <li><a href="###">我的订单</a></li>
+                        <li><a href="###">我的MMall</a></li>
+                        <li><a href="###">关于MMall</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <script src="js/publicPage/top.js"></script>
+    <div class="container">
+        <!--内容区-->
+        <script src="js/publicPage/search.js"></script><!--搜索按钮-->
+        
+        <!--面包屑-->
+        <div class="breadcrumb">
+        	<li><a href="javascript:void(0)">MMall</a><span class="divider">></span></li>
+        	<li class="active">订单确认</li>
+        </div>
+        
+        <div class="Ordersure">
+        	<p class="Ordersure-p">收获地址</p>
+        	<div class="orsurBox">
+        		<div class="orsurItem">
+        			<p class="orsurItem-top">四川成都（HReny收）</p>
+        			<p class="orsurItemp">武侯区天府新谷10号楼</p>
+        			<p class="orsurItem-bottom">
+        				<span onclick="chgeAdr(1)">编辑</span><span>移除</span></p>
+        		</div>
+        		<div class="orsurItem">
+        			<p class="orsurItem-top">四川成都（hReny收）</p>
+        			<p class="orsurItemp">武侯区天府新谷8号楼</p>
+        			<p class="orsurItem-bottom">
+        				<span onclick="chgeAdr(1)">编辑</span><span>移除</span></p>
+        		</div>
+        		
+        		<div class="orsurItem">
+        			<p class="orsurItem-add" onclick="chgeAdr(2)"><img src="images/oradressadd.png"></p>
+        			<p class="orsurItem-font">使用新地址</p>
+        		</div>
+        	</div>
+        	<p class="Ordersure-p">商品清单</p>
+        	<p class="Ordersure-span">
+        		<span class="Ordersure-spana">商品描述</span>
+        		<span class="Ordersure-spanb">价格</span>
+        		<span class="Ordersure-spanb">数量</span>
+        		<span class="Ordersure-spanb">小计</span></p>
+        	<p class="Ordersure-spantwo">
+        		<span class="Ordersure-spanc"><img src="images/order-new.jpg"><span>Apple iPhone 8 Plus 64GB 金色 移动联通电信4G手机</span></span>
+        		<span class="Ordersure-spanb">￥7000</span>
+        		<span class="Ordersure-spanb">x1</span>
+        		<span class="Ordersure-spanb">￥7000</span></p>
+        	<p class="Ordersure-bottom">
+        		订单总价：<span style="color: #c60023;">￥7000</span>
+        		<a class="btn search-btn" href="ordering.html">提交订单</a>
+        	</p>
+        </div>
+        <div class="lgfooter">#XXXXXX版权所有#</div>
+    </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					<span class="address1">编辑地址</span>
+					<span class="address2">使用新地址</span>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p><span>收件人的姓名:</span><input type="text" placeholder="请输入收件人的姓名"></p>
+				<p><span>所在城市:</span>
+					<select><option>--请选择--</option></select>
+					<select><option>--请选择--</option></select></p>
+				<p><span>详细地址:</span><input type="text" placeholder="请精确到门牌号"></p>
+				<p><span>收件人手机:</span><input type="text" placeholder="请输入收件人的手机号"></p>
+				<p><span>邮政编码:</span><input type="text" placeholder="请输入收件的邮政编码"></p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn search-btn btn-sitau">保存收货地址</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div>
+</div><!-- /.modal -->
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+	function chgeAdr(num){
+		num=parseInt(num);
+		$("#myModal").modal("show");
+		$(".address1").hide();
+		$(".address2").hide();
+		$(".address"+num).show();
+	}
+</script>
+</html>
