@@ -18,7 +18,7 @@ public class User {
     private String userAccount;
 
     /**
-     * 用户姓名(2~3个汉字) 默认为 xx同学
+     * 用户姓名(2~3个汉字) 默认为 xx同学 
      */
     @Column(name = "user_name")
     private String userName;
@@ -27,6 +27,11 @@ public class User {
      * 用户密码 (md5加密)
      */
     private String password;
+
+    /**
+     * 盐值
+     */
+    private String salt;
 
     /**
      * 用户角色 0-管理员  1-用户
@@ -95,18 +100,18 @@ public class User {
     }
 
     /**
-     * 获取用户姓名(2~3个汉字) 默认为 xx同学
+     * 获取用户姓名(2~3个汉字) 默认为 xx同学 
      *
-     * @return user_name - 用户姓名(2~3个汉字) 默认为 xx同学
+     * @return user_name - 用户姓名(2~3个汉字) 默认为 xx同学 
      */
     public String getUserName() {
         return userName;
     }
 
     /**
-     * 设置用户姓名(2~3个汉字) 默认为 xx同学
+     * 设置用户姓名(2~3个汉字) 默认为 xx同学 
      *
-     * @param userName 用户姓名(2~3个汉字) 默认为 xx同学
+     * @param userName 用户姓名(2~3个汉字) 默认为 xx同学 
      */
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
@@ -128,6 +133,24 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    /**
+     * 获取盐值
+     *
+     * @return salt - 盐值
+     */
+    public String getSalt() {
+        return salt;
+    }
+
+    /**
+     * 设置盐值
+     *
+     * @param salt 盐值
+     */
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 
     /**

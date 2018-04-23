@@ -9,6 +9,7 @@
     <result column="user_account" jdbcType="CHAR" property="userAccount" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="role_type" jdbcType="SMALLINT" property="roleType" />
     <result column="is_merchant" jdbcType="BIT" property="isMerchant" />
     <result column="user_register_time" jdbcType="TIMESTAMP" property="userRegisterTime" />
