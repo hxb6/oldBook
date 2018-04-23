@@ -6,37 +6,60 @@ server:
     context-path: /oldBook
 
 spring:
-    #数据库连接及数据库连接池配置
+    #数据库连接池配置
     datasource:
         #数据库连接驱动
         driver-class-name: com.mysql.jdbc.Driver
-        #数据库连接地址
-        url: jdbc:mysql://127.0.0.1:3306/old_book
+        #数据库连接url
+        #解决中文乱码问题必须加上 useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://127.0.0.1:3306/old_book?useUnicode=true&characterEncoding=utf8
         #用户名
         username: root
         #密码
         password: 123456
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
+        #属性类型是字符串,通过别名的方式配置扩展插件,
+        #常用的插件有:监控统计用的filter:stat
+        #日志用的filter:log4j
+        #防御sql注入的filter:wall
         filters: stat
+        #最大连接池数量
         maxActive: 20
+        #初始化时建立物理连接的个数。
+        #初始化发生在显示调用init方法，或者第一次getConnection时
         initialSize: 1
+        #获取连接时最大等待时间，单位毫秒。
         maxWait: 60000
+        #最小连接池数量
         minIdle: 1
+        #有两个含义： 1)Destroy线程会检测连接的间隔时间
+        #2)testWhileIdle的判断依据，详细看testWhileIdle属性的说明
         timeBetweenEvictionRunsMillis: 60000
         minEvictableIdleTimeMillis: 300000
+        #用来检测连接是否有效的sql，要求是一个查询语句。
+        #如果validationQuery为null,
+        #testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
         validationQuery: select 'x'
+        #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，
+        #如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
         testWhileIdle: true
+        #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
         testOnBorrow: false
+        #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
         testOnReturn: false
-        poolPreparedStatements: true
-        maxOpenPreparedStatements: 20
+        #是否缓存preparedStatement，也就是PSCache。
+        #PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。
+        poolPreparedStatements: false
+        #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+        #在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+        #maxOpenPreparedStatements: 20
 #  热加载配置
     devtools:
         restart:
           #设置启动热加载
           enabled: true
-          #扫描变化的类的路径
+          #监听当前包及子包下的文件变化
           additional-paths: src/main/java
 # 使用thymeleaf模板
     thymeleaf:
@@ -51,8 +74,6 @@ spring:
       cache: false
       #编码格式
       encoding: utf-8
-
-
 mybatis:
   mapper-locations: classpath:mapping/*.xml
 

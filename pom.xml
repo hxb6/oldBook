@@ -65,12 +65,14 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.0</version>
         </dependency>
-        <!-- tk 通用Mapper -->
+
+        <!-- tk通用mapper快速配置 -->
         <dependency>
             <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
-            <version>3.5.2</version>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
         </dependency>
+
 
         <!-- spring-boot热部署依赖 -->
         <dependency>

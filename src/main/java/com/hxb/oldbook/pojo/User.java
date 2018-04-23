@@ -32,7 +32,7 @@ public class User {
      * 用户角色 0-管理员  1-用户
      */
     @Column(name = "role_type")
-    private Byte roleType;
+    private Short roleType;
 
     /**
      * 是否是商家(只考虑用户) 0-不是  1-是
@@ -135,7 +135,7 @@ public class User {
      *
      * @return role_type - 用户角色 0-管理员  1-用户
      */
-    public Byte getRoleType() {
+    public Short getRoleType() {
         return roleType;
     }
 
@@ -144,7 +144,7 @@ public class User {
      *
      * @param roleType 用户角色 0-管理员  1-用户
      */
-    public void setRoleType(Byte roleType) {
+    public void setRoleType(Short roleType) {
         this.roleType = roleType;
     }
 
