@@ -28,7 +28,7 @@ public class MD5Util {
      * 利用Apache commons的DigestUtils工具类进行MD5加密
      *
      * @param password 明文密码+盐
-     * @return 加密后的密码
+     * @return MD5加密后的密码
      */
     public static String getPassword(String password) {
         byte[] bytes = password.getBytes();
