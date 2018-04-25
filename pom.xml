@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>oldbook</name>
+    <name>oldBook</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -80,6 +80,14 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
         </dependency>
+
+        <!-- aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 

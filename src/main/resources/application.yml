@@ -74,7 +74,12 @@ spring:
       cache: false
       #编码格式
       encoding: utf-8
-mybatis:
-  mapper-locations: classpath:mapping/*.xml
+
+#日志配置
+logging:
+  #读取的日志配置文件
+  config: classpath:logback.xml
+
+
 
 

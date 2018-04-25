@@ -30,7 +30,7 @@
         </jdbcConnection>
 
         <!-- 生成pojo类的包名和位置-->
-        <javaModelGenerator targetPackage="com.hxb.oldbook.pojo" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.hxb.oldBook.pojo" targetProject="src/main/java">
             <!-- 是否允许子包，即targetPackage.schemaName.tableName
                 即 包名.数据库名.表名 设置不允许
             -->
@@ -44,7 +44,7 @@
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
         <!-- mapper接口生成DAO的包名和位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hxb.oldbook.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hxb.oldBook.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
