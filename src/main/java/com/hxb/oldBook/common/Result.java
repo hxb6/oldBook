@@ -1,4 +1,4 @@
-package com.hxb.oldBook.resultbean;
+package com.hxb.oldBook.common;
 
 /**
  * @Package: com.hxb.oldBook.resultbean
@@ -6,10 +6,10 @@ package com.hxb.oldBook.resultbean;
  * @CreateDate: 2018/4/25 12:15
  * @Description:返回信息进行统一格式封装
  **/
-public class ResultBean {
+public class Result<T> {
 
     /**
-     * 返回状态
+     * 返回状态 1-成功 其他均为失败
      */
     private Integer status;
 
@@ -19,9 +19,9 @@ public class ResultBean {
     private String message;
 
     /**
-     * 返回数据封装
+     * 返回的数据,使用泛型兼容不同的类型
      */
-    private Object data;
+    private T data;
 
     public Integer getStatus() {
         return status;
@@ -39,11 +39,15 @@ public class ResultBean {
         this.message = message;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }
+
+
+
+

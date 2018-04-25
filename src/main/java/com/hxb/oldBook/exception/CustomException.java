@@ -1,5 +1,7 @@
 package com.hxb.oldBook.exception;
 
+import com.hxb.oldBook.common.ResultEnum;
+
 /**
  * @Package: com.hxb.oldBook.exception
  * @Author: HeXiaoBo
@@ -7,4 +9,22 @@ package com.hxb.oldBook.exception;
  * @Description: 自定义异常
  **/
 public class CustomException extends RuntimeException{
+
+    /**
+     * 错误状态
+     */
+    private Integer status;
+
+
+    public CustomException(ResultEnum resultEnum) {
+        super(resultEnum.getMessage());
+        this.status = resultEnum.getStatus();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+
+
 }
