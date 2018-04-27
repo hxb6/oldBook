@@ -15,6 +15,9 @@ import java.util.List;
  **/
 public class BaseServiceImpl<T> implements BaseService<T> {
 
+    /**
+     * 注入tk通用mapper接口对象
+     */
     @Autowired
     private Mapper<T> mapper;
 

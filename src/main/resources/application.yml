@@ -80,6 +80,12 @@ logging:
   #读取的日志配置文件
   config: classpath:logback.xml
 
+#MyBatis配置
+mybatis:
+  #扫描mapper配置文件配置
+  mapper-locations: classpath:mapping/*.xml
+
+
 
 
 

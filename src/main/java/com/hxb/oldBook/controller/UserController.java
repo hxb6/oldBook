@@ -7,33 +7,29 @@ import com.hxb.oldBook.common.Result;
 import com.hxb.oldBook.service.UserService;
 import com.hxb.oldBook.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @Package: com.hxb.oldBook.controller.user
  * @Author: HeXiaoBo
  * @CreateDate: 2018/4/23 15:01
- * @Description:用户控制类
+ * @Description:用户信息控制类
  **/
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/test/{id}")
-    public Result test(@PathVariable(value = "id") String id) {
-        try {
-            User user = userService.selectByPrimaryKey(Integer.parseInt(id));
-            if (user != null) {
-                return ResultUtil.success(ResultEnum.SUCCESS, user);
-            } else {
-                return ResultUtil.success(ResultEnum.SUCCESS_NULL);
-            }
-        } catch (Exception e) {
-            throw new CustomException(ResultEnum.ERROR);
-        }
+    @PostMapping("/register")
+    @ResponseBody
+    public Result register(@RequestParam(value = "userAccount")String userAccount,
+                           @RequestParam(value = "password")String password) {
+
+        User user = userService.selectUserByUserAccount(userAccount);
+        return ResultUtil.success("用户已经注册", user);
     }
 
 }

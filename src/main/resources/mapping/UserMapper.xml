@@ -16,4 +16,8 @@
     <result column="register_merchant_time" jdbcType="TIMESTAMP" property="registerMerchantTime" />
     <result column="user_modified_time" jdbcType="TIMESTAMP" property="userModifiedTime" />
   </resultMap>
+
+  <select id="selectUserByUserAccount" parameterType="string" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE user_account = #{userAccount};
+  </select>
 </mapper>
