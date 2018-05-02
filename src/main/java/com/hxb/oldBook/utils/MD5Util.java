@@ -5,7 +5,7 @@ import org.springframework.util.DigestUtils;
  * @package: com.hxb.oldBook.utils
  * @author: HeXiaoBo
  * @date: 2018-04-023 17:20
- * @description: MD5加密工具类 单例
+ * @description: MD5加密工具类
  **/
 
 public class MD5Util {

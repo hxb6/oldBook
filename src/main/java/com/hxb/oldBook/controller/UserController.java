@@ -23,13 +23,65 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 模板跳转到注册页面
+     * @return
+     */
+    @GetMapping("/toRegister")
+    public String toRegister(){
+        return "register";
+    }
+
+    /**
+     * 模板跳转到登录页面
+     * 清除登录标记
+     * @return
+     */
+    @GetMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
+
+    /**
+     * 模板跳转到忘记密码页面
+     * @return
+     */
+    @GetMapping("/toPasswordForget")
+    public String toPasswordForget(){
+        return "passwordForget";
+    }
+
+    @GetMapping("/toPerson")
+    public String toPerson(){
+        return "person";
+    }
+
+    /**
+     * 用户注册
+     * @param userAccount
+     * @param password
+     * @return
+     */
     @PostMapping("/register")
     @ResponseBody
     public Result register(@RequestParam(value = "userAccount")String userAccount,
                            @RequestParam(value = "password")String password) {
 
-        User user = userService.selectUserByUserAccount(userAccount);
-        return ResultUtil.success("用户已经注册", user);
+        return userService.register(userAccount,password);
+    }
+
+    /**
+     * 用户登录
+     * @param userAccount
+     * @param password
+     * @return
+     */
+    @PostMapping("/login")
+    @ResponseBody
+    public Result login(@RequestParam(value = "userAccount")String userAccount,
+                           @RequestParam(value = "password")String password) {
+
+        return userService.login(userAccount,password);
     }
 
 }

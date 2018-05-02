@@ -8,19 +8,13 @@ package com.hxb.oldBook.common;
  **/
 public enum ResultEnum {
 
-    /**
-     * 请求成功
-     */
     SUCCESS(1,"请求成功"),
-
-    /**
-     * 请求成功,数据库中无相关数据
-     */
     SUCCESS_NULL(1,"请求成功,但暂无相关数据"),
-    /**
-     * 未知错误
-     */
-    ERROR(-1,"未知错误");
+    REGISTER_SUCCESS(1,"注册成功"),
+    ERROR(-1,"未知错误"),
+    ALREADY_REGISTER(2,"该用户已经注册"),
+    ACCOUNT_PASSWORD_ERROR(3,"用户或密码错误"),
+    ACCOUNT_NOT_VALID(4,"该账号已被管理员限制使用");
 
     /**
      * 返回的状态码

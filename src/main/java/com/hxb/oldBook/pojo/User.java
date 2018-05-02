@@ -1,12 +1,8 @@
 package com.hxb.oldBook.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.Date;
 import javax.persistence.*;
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
+
 public class User {
     /**
      * 用户id
@@ -16,7 +12,7 @@ public class User {
     private Integer id;
 
     /**
-     * 用户登录账号 10位字符  英文和数字组合
+     * 用户登录账号 10位字符  英文和数字组合(或电话号码)
      */
     @Column(name = "user_account")
     private String userAccount;
@@ -30,7 +26,6 @@ public class User {
     /**
      * 用户密码 (md5加密)
      */
-    @JsonIgnore
     private String password;
 
     /**
@@ -53,23 +48,26 @@ public class User {
     /**
      * 注册成为用户的时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "user_register_time")
     private Date userRegisterTime;
 
     /**
      * 用户注册成为商家的时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "register_merchant_time")
     private Date registerMerchantTime;
 
     /**
      * 用户信息最近修改的时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "user_modified_time")
     private Date userModifiedTime;
+
+    /**
+     * 该账号是否有效
+     */
+    @Column(name = "is_valid")
+    private Boolean isValid;
 
     /**
      * 获取用户id
@@ -90,18 +88,18 @@ public class User {
     }
 
     /**
-     * 获取用户登录账号 10位字符  英文和数字组合
+     * 获取用户登录账号 10位字符  英文和数字组合(或电话号码)
      *
-     * @return user_account - 用户登录账号 10位字符  英文和数字组合
+     * @return user_account - 用户登录账号 10位字符  英文和数字组合(或电话号码)
      */
     public String getUserAccount() {
         return userAccount;
     }
 
     /**
-     * 设置用户登录账号 10位字符  英文和数字组合
+     * 设置用户登录账号 10位字符  英文和数字组合(或电话号码)
      *
-     * @param userAccount 用户登录账号 10位字符  英文和数字组合
+     * @param userAccount 用户登录账号 10位字符  英文和数字组合(或电话号码)
      */
     public void setUserAccount(String userAccount) {
         this.userAccount = userAccount == null ? null : userAccount.trim();
@@ -249,5 +247,23 @@ public class User {
      */
     public void setUserModifiedTime(Date userModifiedTime) {
         this.userModifiedTime = userModifiedTime;
+    }
+
+    /**
+     * 获取该账号是否有效
+     *
+     * @return is_valid - 该账号是否有效
+     */
+    public Boolean getIsValid() {
+        return isValid;
+    }
+
+    /**
+     * 设置该账号是否有效
+     *
+     * @param isValid 该账号是否有效
+     */
+    public void setIsValid(Boolean isValid) {
+        this.isValid = isValid;
     }
 }

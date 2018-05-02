@@ -19,11 +19,17 @@ public class HandleException {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result unifiedHandleException(Exception e){
+        /*
+        用户自定义的异常处理
+         */
         if(e instanceof CustomException){
             CustomException customException = ((CustomException) e);
-            return ResultUtil.error(customException.getMessage(), null);
+            return ResultUtil.error(customException);
         }
 
+        /*
+         系统异常
+         */
         return ResultUtil.error(ResultEnum.ERROR);
     }
 }

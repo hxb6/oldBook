@@ -2,6 +2,7 @@ package com.hxb.oldBook.utils;
 
 import com.hxb.oldBook.common.Result;
 import com.hxb.oldBook.common.ResultEnum;
+import com.hxb.oldBook.exception.CustomException;
 
 /**
  * @Package: com.hxb.oldBook.utils
@@ -53,6 +54,18 @@ public class ResultUtil {
     public static  Result error(String message, Object object){
         Result result = setMessageAndData(message, object);
         result.setStatus(ResultEnum.ERROR.getStatus());
+        return result;
+    }
+
+    /**
+     * 相应出错时根据自定义的异常设置相应的相应状态,提示信息和数据
+     * @param customException 自定义的异常信息类
+     * @return 格式的封装
+     */
+    public static  Result error(CustomException customException){
+        Result result = new Result();
+        result.setMessage(customException.getMessage());
+        result.setStatus(customException.getStatus());
         return result;
     }
 

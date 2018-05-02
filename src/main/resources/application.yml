@@ -1,9 +1,9 @@
 server:
   #启动端口
   port: 8080
-  servlet:
+  #servlet:
     #启动路径
-    context-path: /oldBook
+    #context-path: /oldBook
 
 spring:
     #数据库连接池配置
@@ -54,16 +54,15 @@ spring:
         #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
         #在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
         #maxOpenPreparedStatements: 20
-#  热加载配置
+    #热加载配置
     devtools:
         restart:
           #设置启动热加载
           enabled: true
           #监听当前包及子包下的文件变化
           additional-paths: src/main/java
-# 使用thymeleaf模板
+    #使用thymeleaf模板
     thymeleaf:
-      enabled: true
       #模板前缀
       prefix: classpath:/templates/
       #模板后缀
@@ -74,7 +73,6 @@ spring:
       cache: false
       #编码格式
       encoding: utf-8
-
 #日志配置
 logging:
   #读取的日志配置文件
@@ -84,6 +82,8 @@ logging:
 mybatis:
   #扫描mapper配置文件配置
   mapper-locations: classpath:mapping/*.xml
+
+
 
 
 

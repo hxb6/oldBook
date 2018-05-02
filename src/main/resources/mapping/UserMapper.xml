@@ -15,6 +15,7 @@
     <result column="user_register_time" jdbcType="TIMESTAMP" property="userRegisterTime" />
     <result column="register_merchant_time" jdbcType="TIMESTAMP" property="registerMerchantTime" />
     <result column="user_modified_time" jdbcType="TIMESTAMP" property="userModifiedTime" />
+    <result column="is_valid" jdbcType="BIT" property="isValid" />
   </resultMap>
 
   <select id="selectUserByUserAccount" parameterType="string" resultMap="BaseResultMap">

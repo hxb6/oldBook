@@ -1,44 +1,58 @@
 <!DOCTYPE html>
-<html>
-	<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>登录</title>
-	<!--bootstrap的css-->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <title>用户登录</title>
+    <!--bootstrap的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
     <!--自定义css-->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <!--解决IE兼容-->
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	</head>
-	<body>
-		<div class="lghead"><span>商城（替换）</span></div>
-		<div class="lgContainer"><!--lgContainer-->
-			<div class="lgContent"><!--lgContent-->
-				<p class="lgContent_p">用户登录</p>
-				<div class="lgContent_input"><!--lgContent_input-->
-					<form role="form" class="form-horizontal">
-						<div class="input-group">
-						  <span class="input-group-addon">用户名</span>
-						  <input type="text" class="form-control" placeholder="请输入用户名">
-						</div>
-						<div class="input-group">
-						  <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;码</span>
-						  <input type="password" class="form-control" placeholder="请输入密码">
-						 </div>
-						 <div class="input-group">
-					          <button type="submit" class="btn_width">登录</button>
-					     </div>
-					</form>	
-				</div><!--lgContent_input-->
-				<div class="lgContent_btom">
-					<span><a href="pwdforget.html">忘记密码</a></span>
-					<span><a href="register.html">免费注册</a></span>
-				</div>
-			</div><!--lgContent-->
-		</div><!--lgContainer-->
-		<div class="lgfooter">#XXXXXX版权所有#</div>
-	</body>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
+    <script th:src="@{/js/jquery.form.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/myJs/login.js}"></script>
+</head>
+<body>
+<div class="lghead"><span>二手书籍管理系统</span></div>
+<div class="lgContainer"><!--lgContainer-->
+    <div class="lgContent"><!--lgContent-->
+        <p class="lgContent_p">用户登录</p>
+        <div class="lgContent_input"><!--lgContent_input-->
+            <form role="form" class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon">用&nbsp;户&nbsp;名</span>
+                    <input type="text" id="userAccount" name="userAccount" class="form-control" placeholder="请输入用户名">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;码</span>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="myCode" style="width: 160px" class="form-control" placeholder="请输入验证码">
+                    <canvas id="canvas" onclick="drawPic()" width="120" height="34"></canvas>
+                </div>
+            </form>
+            <div class="input-group" style="text-align: left">
+                <label id="errorInfo" style="color: red;text-align: left"></label>
+                <button type="button" onclick="login()" class="btn_width">登录</button>
+            </div>
+        </div><!--lgContent_input-->
+        <div class="lgContent_btom">
+            <span><a href="/user/toPasswordForget">忘记密码</a></span>
+            <span><a href="/user/toRegister">免费注册</a></span>
+        </div>
+    </div><!--lgContent-->
+</div><!--lgContainer-->
+</body>
+<script>
+    /**
+     * 绘制验证码
+     */
+    drawPic();
+</script>
 </html>
