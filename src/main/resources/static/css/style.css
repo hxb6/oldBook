@@ -238,7 +238,7 @@ body{background-color: #f6f6f6;}
 }
 .ContentDiv-left{
 	display: inline-block;
-	width: 100px;
+	width: 150px;
 }
 .ContentDiv>p{
 	padding: 8px;

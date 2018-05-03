@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>首页</title>
+    <title>个人中心</title>
     <!--bootstrap的css-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
     <!--自定义css-->
@@ -14,37 +14,30 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script th:src="@{/js/jquery-3.1.1.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/myJs/person.js}"></script>
 </head>
 <body>
-<div th:include="header"></div>
+<!-- 公共头部 -->
+<div th:replace="/fragment/header :: header"></div>
 <div class="container" style="margin-top: 20px">
 
 
-    <!--内容导航-->
-    <div class="nav-left">
-        <ul class="pull-left">
-            <li class="active"><a href="javascript:void(0)">个人信息</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    订单信息<b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" onclick="test(1)">售卖的书籍订单</a></li>
-                    <li><a href="#" onclick="test(2)">购买的书籍订单</a></li>
-                </ul>
-            </li>
-            <li><a href="percgpwd.html">修改密码</a></li>
-            <li><a href="javascript:void(0)">关于MMall</a></li>
-        </ul>
-    </div>
+    <!-- 个人中心公共导航栏 -->
+    <div th:replace="/fragment/sidebar :: sidebar"></div>
+
 
     <div class="Content pull-right">
-        <p class="Content-p">修改个人信息</p>
-        <div class="ContentDiv" id="test" th:include="test">
-        </div>
-        <div>
+        <p class="Content-p">个人信息(*标记可修改)</p>
+        <div class="ContentDiv">
+            <input type="hidden" id="userId" th:value="${session.userId}">
+            <p><span class="ContentDiv-left">用户账号:</span><span id="userAccount"/></p>
+            <p><span class="ContentDiv-left">用户姓名*:</span><input maxlength="3" style="border-style: none" id="userName"/></p>
+            <p><span class="ContentDiv-left">注册时间:</span><span id="userRegisterTime"/></p>
+            <p><span class="ContentDiv-left">最后一次修改时间:</span><sapn id="userModifiedTime"/></p>
+            <p><span class="ContentDiv-left">是否是商家:</span><span id="isMerchant"/></p>
+            <p><span class="ContentDiv-left">申请成为商家的时间:</span><sapn id="registerMerchantTime"/></p>
             <p>
-                <button class="btn search-btn">提交修改</button>
+                <button onclick="updateUser()" class="btn search-btn">提交修改</button>
             </p>
         </div>
     </div>

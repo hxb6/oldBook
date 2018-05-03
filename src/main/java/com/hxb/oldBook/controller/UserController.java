@@ -1,20 +1,23 @@
 package com.hxb.oldBook.controller;
 
-import com.hxb.oldBook.common.ResultEnum;
-import com.hxb.oldBook.exception.CustomException;
-import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.common.Result;
+import com.hxb.oldBook.common.ResultEnum;
+import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.service.UserService;
 import com.hxb.oldBook.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+
 /**
- * @Package: com.hxb.oldBook.controller.user
+ * @Package: com.hxb.oldBook.controller
  * @Author: HeXiaoBo
- * @CreateDate: 2018/4/23 15:01
- * @Description:用户信息控制类
+ * @CreateDate: 2018/5/3 14:47
+ * @Description: 用户行为控制
  **/
 @Controller
 @RequestMapping("/user")
@@ -22,66 +25,83 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     /**
-     * 模板跳转到注册页面
+     * 跳转到个人中心页面
      * @return
      */
-    @GetMapping("/toRegister")
-    public String toRegister(){
-        return "register";
-    }
-
-    /**
-     * 模板跳转到登录页面
-     * 清除登录标记
-     * @return
-     */
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
-    }
-
-    /**
-     * 模板跳转到忘记密码页面
-     * @return
-     */
-    @GetMapping("/toPasswordForget")
-    public String toPasswordForget(){
-        return "passwordForget";
-    }
-
-    @GetMapping("/toPerson")
+    @RequestMapping("/person")
     public String toPerson(){
         return "person";
     }
 
     /**
-     * 用户注册
-     * @param userAccount
-     * @param password
+     * 进入修改密码页面
      * @return
      */
-    @PostMapping("/register")
-    @ResponseBody
-    public Result register(@RequestParam(value = "userAccount")String userAccount,
-                           @RequestParam(value = "password")String password) {
-
-        return userService.register(userAccount,password);
+    @RequestMapping("/changePassword")
+    public String toChangePassword(){
+        return "changePassword";
     }
 
     /**
-     * 用户登录
-     * @param userAccount
-     * @param password
+     * 用户退出登录 清除登录状态
+     * @param session
      * @return
      */
-    @PostMapping("/login")
-    @ResponseBody
-    public Result login(@RequestParam(value = "userAccount")String userAccount,
-                           @RequestParam(value = "password")String password) {
-
-        return userService.login(userAccount,password);
+    @RequestMapping("/loginOut")
+    public String loginOut(HttpSession session){
+        //清除session
+        session.invalidate();
+        return "login";
     }
 
+    /**
+     * 根据用户id得到用户
+     * @param session
+     * @return
+     */
+    @GetMapping("/getUserById")
+    @ResponseBody
+    public Result getUserById(HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
+        User user = userService.selectByPrimaryKey(userId);
+        return ResultUtil.success(ResultEnum.SUCCESS, user);
+    }
+
+    /**
+     * 根据主键更新属性不为null的值
+     * @param user 用户
+     * @return
+     */
+    @PostMapping("/updateUser")
+    public String updateUser(@RequestBody User user,HttpSession session){
+        //设置新的姓名
+        session.setAttribute("userName", user.getUserName());
+        //设置最近修改信息的时间
+        user.setUserModifiedTime(new Date());
+        userService.updateByPrimaryKeySelective(user);
+        return "person";
+    }
+
+
+    /**
+     *  修改密码
+     * @param session 会话session
+     * @param oldPassword  旧密码
+     * @param newPassword  新密码
+     * @return
+     */
+    @PostMapping("/changePassword")
+    @ResponseBody
+    public Result changePassword(
+            HttpSession session,
+            @RequestParam("oldPassword")String oldPassword,
+            @RequestParam("newPassword")String newPassword){
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (oldPassword != null && newPassword != null && userId != null) {
+            return userService.changePassword(userId, oldPassword, newPassword);
+        }else{
+            return ResultUtil.error("密码不能为空", null);
+        }
+    }
 }

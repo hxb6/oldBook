@@ -10,8 +10,13 @@ import com.hxb.oldBook.utils.MD5Util;
 import com.hxb.oldBook.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -101,7 +106,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             /**
              * 检查该账号是否可用
              */
-            if(!user.getIsValid()){
+            if (!user.getIsValid()) {
                 throw new CustomException(ResultEnum.ACCOUNT_NOT_VALID);
             }
             /*
@@ -112,7 +117,42 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
                 throw new CustomException(ResultEnum.ACCOUNT_PASSWORD_ERROR);
             }
             //保存用户登录标记
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            HttpSession session = request.getSession();
+            session.setAttribute("userName", user.getUserName());
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("isLogin", "yes");
             return ResultUtil.success("登录成功", user);
         }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param id          用户id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 封装成结果集
+     */
+    @Override
+    public Result changePassword(Integer id, String oldPassword, String newPassword) {
+        //根据主键得到用户
+        User user = userMapper.selectByPrimaryKey(id);
+        //用户的盐
+        String salt = user.getSalt();
+        /*
+        用户输入的旧密码和盐得到MD5密码和原MD5密码对比
+         */
+        String oldMD5Password = MD5Util.getPassword(oldPassword + salt);
+        if (oldMD5Password != null && oldMD5Password.equals(user.getPassword())) {
+            //设置新密码加盐的MD5密码
+            user.setPassword(MD5Util.getPassword(newPassword + salt));
+            userMapper.updateByPrimaryKeySelective(user);
+            return ResultUtil.success(ResultEnum.SUCCESS);
+        } else {
+            throw new CustomException(ResultEnum.OLD_PASSWORD_ERROR);
+        }
+
     }
 }

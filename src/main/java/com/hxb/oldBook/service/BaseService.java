@@ -40,4 +40,12 @@ public interface BaseService<T>{
      */
    List<T> selectAll();
 
+    /**
+     * 调用mapper的updateByPrimaryKeySelective的方法 根据主键更新属性不为null的值
+     * @param object
+     * @return
+     */
+   int updateByPrimaryKeySelective(T object);
+
+
 }

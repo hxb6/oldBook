@@ -43,9 +43,23 @@
             </div>
         </div><!--lgContent_input-->
         <div class="lgContent_btom">
-            <span><a href="/user/toLogin">已有账号，去登陆>></a></span>
+            <span><a href="/toLogin">已有账号，去登陆>></a></span>
         </div>
     </div><!--lgContent-->
 </div><!--lgContainer-->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>注册成功,去登陆</div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="toLogin(1)" class="btn search-btn btn-sitau">去登陆</button>
+                <button onclick="toLogin(0)" class="btn search-btn btn-sitau">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div><!-- /.modal -->
 </body>
 </html>

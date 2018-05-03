@@ -10,11 +10,9 @@
  */
 function login() {
     var options = {
-        url: "/user/login",
+        url: "/login",
         type: "post",
         success: function (object) {
-            // object = JSON.parse(object);
-            console.log(object);
             //用户名或密码错误或账号不可用
             if (object.status != 1) {
                 //重绘验证码

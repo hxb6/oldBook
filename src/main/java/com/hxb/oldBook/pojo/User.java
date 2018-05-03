@@ -1,8 +1,13 @@
 package com.hxb.oldBook.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import javax.persistence.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     /**
      * 用户id
@@ -23,11 +28,13 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
+    @JsonIgnore
     /**
      * 用户密码 (md5加密)
      */
     private String password;
 
+    @JsonIgnore
     /**
      * 盐值
      */
@@ -45,18 +52,21 @@ public class User {
     @Column(name = "is_merchant")
     private Boolean isMerchant;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
     /**
      * 注册成为用户的时间
      */
     @Column(name = "user_register_time")
     private Date userRegisterTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
     /**
      * 用户注册成为商家的时间
      */
     @Column(name = "register_merchant_time")
     private Date registerMerchantTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
     /**
      * 用户信息最近修改的时间
      */

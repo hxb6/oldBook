@@ -35,4 +35,13 @@ public interface UserService extends BaseService<User> {
      * @return 封装成结果集
      */
     Result login (String userAccount,String password);
+
+    /**
+     * 修改密码
+     * @param id 用户id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 封装成结果集
+     */
+    Result changePassword(Integer id,String oldPassword,String newPassword);
 }

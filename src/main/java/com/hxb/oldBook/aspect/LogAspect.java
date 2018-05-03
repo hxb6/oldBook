@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @Aspect
 //Order注解控制多个Aspect的执行顺序,越小越先执行
-@Order(1)
+@Order(2)
 public class LogAspect {
 
     /**
@@ -33,7 +33,7 @@ public class LogAspect {
      * 切入点 controller包及其子包下所有类中所有的方法
      */
     @Pointcut("execution(* com.hxb.oldBook.controller.*.*(..))")
-    public void logAop() {
+    public void pointCut() {
     }
 
     /**
@@ -43,7 +43,7 @@ public class LogAspect {
      *                  JoinPoint对象封装了SpringAop中切面方法的信息
      *                  在切面方法中添加JoinPoint参数,就可以获取到封装了该方法信息的JoinPoint对象.
      */
-    @Before("logAop()")
+    @Before("pointCut()")
     public void recordLog(JoinPoint joinPoint) {
         /*
             1.从RequestContextHolder中获取 RequestAttributes 对象

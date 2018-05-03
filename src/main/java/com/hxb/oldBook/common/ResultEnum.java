@@ -1,7 +1,7 @@
 package com.hxb.oldBook.common;
 
 /**
- * @Package: com.hxb.oldBook.common
+ * @Package: com.hxb.oldBook.fragment
  * @Author: HeXiaoBo
  * @CreateDate: 2018/4/25 13:29
  * @Description: 保存返回状态和提示信息的枚举类
@@ -14,7 +14,8 @@ public enum ResultEnum {
     ERROR(-1,"未知错误"),
     ALREADY_REGISTER(2,"该用户已经注册"),
     ACCOUNT_PASSWORD_ERROR(3,"用户或密码错误"),
-    ACCOUNT_NOT_VALID(4,"该账号已被管理员限制使用");
+    ACCOUNT_NOT_VALID(4,"该账号已被管理员限制使用"),
+    OLD_PASSWORD_ERROR(5,"旧密码错误");
 
     /**
      * 返回的状态码

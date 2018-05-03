@@ -9,19 +9,32 @@
  */
 function register() {
     var options = {
-        url : "/user/register",
+        url : "/register",
         type : "post",
         success : function (object) {
             if(object.status != 1){
                 $("#errorInfo").text(object.message);
             } else {
-                window.location.href = "/user/toLogin";
+                $("#myModal").modal("show");
+                // window.location.href = "/toLogin";
             }
         }
     };
 
     if(checkData()){
         $("form").ajaxSubmit(options);
+    }
+}
+
+/**
+ * 选择是去登录页面还是留在本页面
+ * @param num
+ */
+function toLogin(num) {
+    if(num == 1){
+        window.location.href = "/toLogin";
+    }else{
+        $("#myModal").modal("hide");
     }
 }
 

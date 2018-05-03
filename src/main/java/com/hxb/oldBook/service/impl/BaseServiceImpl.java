@@ -59,4 +59,15 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     public List<T> selectAll() {
         return mapper.selectAll();
     }
+
+
+    /**
+     * 调用mapper的updateByPrimaryKeySelective的方法 根据主键更新属性不为null的值
+     * @param object
+     * @return
+     */
+    @Override
+    public int updateByPrimaryKeySelective(T object) {
+        return mapper.updateByPrimaryKeySelective(object);
+    }
 }

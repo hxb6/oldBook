@@ -169,7 +169,7 @@ var getUrlParams = function() {
 			param = params[ i ].split( "=" );
 			name = decodeURIComponent( param[ 0 ] );
 
-			// allow just a key to turn on a flag, e.g., test.html?noglobals
+			// allow just a key to turn on a flag, e.g., sidebar.html?noglobals
 			value = param.length === 1 ||
 				decodeURIComponent( param.slice( 1 ).join( "=" ) ) ;
 			if ( urlParams[ name ] ) {
@@ -2291,7 +2291,7 @@ QUnit.diff = ( function() {
 
 	/**
 	 * Find the differences between two texts.  Simplifies the problem by stripping
-	 * any common prefix or suffix off the texts before diffing.
+	 * any fragment prefix or suffix off the texts before diffing.
 	 * @param {string} text1 Old string to be diffed.
 	 * @param {string} text2 New string to be diffed.
 	 * @param {boolean=} optChecklines Optional speedup flag. If present and false,
@@ -2327,13 +2327,13 @@ QUnit.diff = ( function() {
 
 		checklines = optChecklines;
 
-		// Trim off common prefix (speedup).
+		// Trim off fragment prefix (speedup).
 		commonlength = this.diffCommonPrefix( text1, text2 );
 		commonprefix = text1.substring( 0, commonlength );
 		text1 = text1.substring( commonlength );
 		text2 = text2.substring( commonlength );
 
-		// Trim off common suffix (speedup).
+		// Trim off fragment suffix (speedup).
 		commonlength = this.diffCommonSuffix( text1, text2 );
 		commonsuffix = text1.substring( text1.length - commonlength );
 		text1 = text1.substring( 0, text1.length - commonlength );
@@ -2474,15 +2474,15 @@ QUnit.diff = ( function() {
 	};
 
 	/**
-	 * Determine the common prefix of two strings.
+	 * Determine the fragment prefix of two strings.
 	 * @param {string} text1 First string.
 	 * @param {string} text2 Second string.
-	 * @return {number} The number of characters common to the start of each
+	 * @return {number} The number of characters fragment to the start of each
 	 *     string.
 	 */
 	DiffMatchPatch.prototype.diffCommonPrefix = function( text1, text2 ) {
 		var pointermid, pointermax, pointermin, pointerstart;
-		// Quick check for common null cases.
+		// Quick check for fragment null cases.
 		if ( !text1 || !text2 || text1.charAt( 0 ) !== text2.charAt( 0 ) ) {
 			return 0;
 		}
@@ -2506,14 +2506,14 @@ QUnit.diff = ( function() {
 	};
 
 	/**
-	 * Determine the common suffix of two strings.
+	 * Determine the fragment suffix of two strings.
 	 * @param {string} text1 First string.
 	 * @param {string} text2 Second string.
-	 * @return {number} The number of characters common to the end of each string.
+	 * @return {number} The number of characters fragment to the end of each string.
 	 */
 	DiffMatchPatch.prototype.diffCommonSuffix = function( text1, text2 ) {
 		var pointermid, pointermax, pointermin, pointerend;
-		// Quick check for common null cases.
+		// Quick check for fragment null cases.
 		if ( !text1 ||
 				!text2 ||
 				text1.charAt( text1.length - 1 ) !== text2.charAt( text2.length - 1 ) ) {
@@ -2540,7 +2540,7 @@ QUnit.diff = ( function() {
 
 	/**
 	 * Find the differences between two texts.  Assumes that the texts do not
-	 * have any common prefix or suffix.
+	 * have any fragment prefix or suffix.
 	 * @param {string} text1 Old string to be diffed.
 	 * @param {string} text2 New string to be diffed.
 	 * @param {boolean} checklines Speedup flag.  If false, then don't run a
@@ -2628,7 +2628,7 @@ QUnit.diff = ( function() {
 	 * @param {string} text2 Second string.
 	 * @return {Array.<string>} Five element Array, containing the prefix of
 	 *     text1, the suffix of text1, the prefix of text2, the suffix of
-	 *     text2 and the common middle.  Or null if there was no match.
+	 *     text2 and the fragment middle.  Or null if there was no match.
 	 * @private
 	 */
 	DiffMatchPatch.prototype.diffHalfMatch = function( text1, text2 ) {
@@ -2652,7 +2652,7 @@ QUnit.diff = ( function() {
 		 * @param {number} i Start index of quarter length substring within longtext.
 		 * @return {Array.<string>} Five element Array, containing the prefix of
 		 *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
-		 *     of shorttext and the common middle.  Or null if there was no match.
+		 *     of shorttext and the fragment middle.  Or null if there was no match.
 		 * @private
 		 */
 		function diffHalfMatchI( longtext, shorttext, i ) {
@@ -3074,7 +3074,7 @@ QUnit.diff = ( function() {
 	 * Determine if the suffix of one string is the prefix of another.
 	 * @param {string} text1 First string.
 	 * @param {string} text2 Second string.
-	 * @return {number} The number of characters common to the end of the first
+	 * @return {number} The number of characters fragment to the end of the first
 	 *     string and the start of the second string.
 	 * @private
 	 */
@@ -3237,7 +3237,7 @@ QUnit.diff = ( function() {
 				// Upon reaching an equality, check for prior redundancies.
 				if ( countDelete + countInsert > 1 ) {
 					if ( countDelete !== 0 && countInsert !== 0 ) {
-						// Factor out any common prefixes.
+						// Factor out any fragment prefixes.
 						commonlength = this.diffCommonPrefix( textInsert, textDelete );
 						if ( commonlength !== 0 ) {
 							if ( ( pointer - countDelete - countInsert ) > 0 &&
@@ -3254,7 +3254,7 @@ QUnit.diff = ( function() {
 							textInsert = textInsert.substring( commonlength );
 							textDelete = textDelete.substring( commonlength );
 						}
-						// Factor out any common suffixies.
+						// Factor out any fragment suffixies.
 						commonlength = this.diffCommonSuffix( textInsert, textDelete );
 						if ( commonlength !== 0 ) {
 							diffs[ pointer ][ 1 ] = textInsert.substring( textInsert.length -
