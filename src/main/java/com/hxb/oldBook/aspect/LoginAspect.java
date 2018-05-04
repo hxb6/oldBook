@@ -1,5 +1,6 @@
 package com.hxb.oldBook.aspect;
 
+import com.hxb.oldBook.utils.RequestUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,18 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
  * @Package: com.hxb.oldBook.aspect
  * @Author: HeXiaoBo
  * @CreateDate: 2018/5/3 14:16
- * @Description:
+ * @Description: 权限校验
  **/
 @Component
 @Aspect
@@ -34,9 +30,7 @@ public class LoginAspect {
 
     @Around("pointCut()")
     public Object checkLogin(ProceedingJoinPoint pjp) throws Throwable {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        HttpSession session = request.getSession();
+        HttpSession session = RequestUtil.getSession();
         String isLogin = (String) session.getAttribute("isLogin");
         if (isLogin == null) {
             logger.info("------没有登录-----");

@@ -7,6 +7,7 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="apply_reason" jdbcType="VARCHAR" property="applyReason" />
     <result column="return_message" jdbcType="VARCHAR" property="returnMessage" />
     <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
     <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />

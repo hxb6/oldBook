@@ -14,7 +14,6 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script th:src="@{/js/jquery-3.1.1.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/myJs/person.js}"></script>
 </head>
 <body>
 <!-- 公共头部 -->
@@ -23,21 +22,20 @@
 
 
     <!-- 个人中心公共导航栏 -->
-    <div th:replace="/fragment/sidebar :: sidebar"></div>
+    <div th:replace="/fragment/shopSidebar :: shopSidebar"></div>
 
 
     <div class="Content pull-right">
-        <p class="Content-p">个人信息(*标记可修改)</p>
+        <p class="Content-p">个人网上书店</p>
         <div class="ContentDiv">
-            <input type="hidden" id="userId" th:value="${session.user.id}">
-            <p><span class="ContentDiv-left">用户账号:</span><span id="userAccount"/></p>
-            <p><span class="ContentDiv-left">用户姓名*:</span><input maxlength="3" style="border-style: none" id="userName"/></p>
-            <p><span class="ContentDiv-left">注册时间:</span><span id="userRegisterTime"/></p>
-            <p><span class="ContentDiv-left">最后一次修改时间:</span><sapn id="userModifiedTime"/></p>
-            <p><span class="ContentDiv-left">是否是商家:</span><span id="isMerchant"/></p>
+            <!--<p><span class="ContentDiv-left">用户账号:</span><span id="userAccount"/></p>-->
+            <!--<p><span class="ContentDiv-left">用户姓名*:</span><input maxlength="3" style="border-style: none" id="userName"/></p>-->
+            <!--<p><span class="ContentDiv-left">注册时间:</span><span id="userRegisterTime"/></p>-->
+            <!--<p><span class="ContentDiv-left">最后一次修改时间:</span><sapn id="userModifiedTime"/></p>-->
+            <!--<p><span class="ContentDiv-left">是否是商家:</span><span id="isMerchant"/></p>-->
             <p><span class="ContentDiv-left">申请成为商家的时间:</span><sapn id="registerMerchantTime"/></p>
             <p>
-                <button onclick="updateUser()" class="btn search-btn">提交修改</button>
+                <button onclick="" class="btn search-btn">提交修改</button>
             </p>
         </div>
     </div>

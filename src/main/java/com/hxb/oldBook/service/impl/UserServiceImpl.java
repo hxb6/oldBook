@@ -7,6 +7,7 @@ import com.hxb.oldBook.mapper.UserMapper;
 import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.service.UserService;
 import com.hxb.oldBook.utils.MD5Util;
+import com.hxb.oldBook.utils.RequestUtil;
 import com.hxb.oldBook.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,12 +117,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             if (!md5Password.equals(user.getPassword())) {
                 throw new CustomException(ResultEnum.ACCOUNT_PASSWORD_ERROR);
             }
-            //保存用户登录标记
-            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-            HttpSession session = request.getSession();
-            session.setAttribute("userName", user.getUserName());
-            session.setAttribute("userId", user.getId());
+            //得到会话session
+            HttpSession session = RequestUtil.getSession();
+            //保存用户登录标记和信息到session中
+            session.setAttribute("user", user);
             session.setAttribute("isLogin", "yes");
             return ResultUtil.success("登录成功", user);
         }

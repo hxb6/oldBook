@@ -10,9 +10,15 @@ public class ApplyForBusiness {
     private Integer id;
 
     /**
-     * 审批状态
+     * 审批状态  0-未审批 1-审批通过 2-审批不通过
      */
     private Short status;
+
+    /**
+     * 申请原因
+     */
+    @Column(name = "apply_reason")
+    private String applyReason;
 
     /**
      * 回执信息
@@ -53,21 +59,39 @@ public class ApplyForBusiness {
     }
 
     /**
-     * 获取审批状态
+     * 获取审批状态  0-未审批 1-审批通过 2-审批不通过
      *
-     * @return status - 审批状态
+     * @return status - 审批状态  0-未审批 1-审批通过 2-审批不通过
      */
     public Short getStatus() {
         return status;
     }
 
     /**
-     * 设置审批状态
+     * 设置审批状态  0-未审批 1-审批通过 2-审批不通过
      *
-     * @param status 审批状态
+     * @param status 审批状态  0-未审批 1-审批通过 2-审批不通过
      */
     public void setStatus(Short status) {
         this.status = status;
+    }
+
+    /**
+     * 获取申请原因
+     *
+     * @return apply_reason - 申请原因
+     */
+    public String getApplyReason() {
+        return applyReason;
+    }
+
+    /**
+     * 设置申请原因
+     *
+     * @param applyReason 申请原因
+     */
+    public void setApplyReason(String applyReason) {
+        this.applyReason = applyReason == null ? null : applyReason.trim();
     }
 
     /**

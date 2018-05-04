@@ -4,12 +4,20 @@
     <div class="row index-top-box">
         <div class="index-top clearfix">
             <div class="pull-left">
-                <span>欢迎</span>&nbsp;<span th:text="${session.userName}"></span>&nbsp;<a href="/user/loginOut">[退出]</a>
+                <span>欢迎</span>&nbsp;<span th:text="${session.user.userName}"></span>&nbsp;<a href="/user/loginOut">[退出]</a>
             </div>
             <div class="pull-right">
                 <ul>
-                    <li><a href="/index">首页</a> </li>
-                    <li><a href="/user/person">个人中心</a></li>
+                    <li><a href="/index">首页</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            个人中心<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/person">我是用户</a></li>
+                            <li><a href="/shop/info">我是商家</a></li>
+                        </ul>
+                    </li>
                     <li><a href="###">关于MMall</a></li>
                 </ul>
             </div>

@@ -276,4 +276,22 @@ public class User {
     public void setIsValid(Boolean isValid) {
         this.isValid = isValid;
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userAccount='" + userAccount + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", roleType=" + roleType +
+                ", isMerchant=" + isMerchant +
+                ", userRegisterTime=" + userRegisterTime +
+                ", registerMerchantTime=" + registerMerchantTime +
+                ", userModifiedTime=" + userModifiedTime +
+                ", isValid=" + isValid +
+                '}';
+    }
 }

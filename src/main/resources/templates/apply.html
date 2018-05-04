@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>个人中心</title>
+    <!--bootstrap的css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <!--自定义css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!-- 公共头部 -->
+<div th:replace="/fragment/header :: header"></div>
+<div class="container" style="margin-top: 20px">
+
+
+    <div class="nav-left">
+        <ul class="pull-left">
+            <li><a href="javascript:void(0)">申请成为商家</a></li>
+        </ul>
+    </div>
+
+
+    <!-- 申请成为商家信息div -->
+    <div class="Content pull-right" style="display: none">
+        <p class="Content-p">申请成为商家</p>
+        <div class="ContentDiv">
+            <span>申&nbsp;请&nbsp;原&nbsp;因</span>
+            <div class="input-group">
+                <textarea type="text" id="userAccount" name="userAccount" class="form-control"></textarea>
+            </div>
+
+            <div class="input-group" style="text-align: left">
+                <button type="button" onclick="" class="btn_width">申请</button>
+            </div>
+        </div>
+    </div>
+    <!-- 申请请求审批信息 -->
+    <div class="Content pull-right">
+        <div class="ContentDiv">
+            <div class="input-group">
+                <span class="input-group-addon">申&nbsp;请&nbsp;状&nbsp;态</span>
+                <input type="text" value="暂未审批" style="text-align: center" disabled="disabled" class="form-control"/>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">系&nbsp;统&nbsp;消&nbsp;息</span>
+                <input type="text"   class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

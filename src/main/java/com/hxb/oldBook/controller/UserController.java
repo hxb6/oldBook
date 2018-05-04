@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     /**
-     * 跳转到个人中心页面
+     * 跳转到个人中心我是用户页面
      * @return
      */
     @RequestMapping("/person")
@@ -63,7 +63,7 @@ public class UserController {
     @GetMapping("/getUserById")
     @ResponseBody
     public Result getUserById(HttpSession session){
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = ((User) session.getAttribute("user")).getId();
         User user = userService.selectByPrimaryKey(userId);
         return ResultUtil.success(ResultEnum.SUCCESS, user);
     }
@@ -75,11 +75,11 @@ public class UserController {
      */
     @PostMapping("/updateUser")
     public String updateUser(@RequestBody User user,HttpSession session){
-        //设置新的姓名
-        session.setAttribute("userName", user.getUserName());
         //设置最近修改信息的时间
         user.setUserModifiedTime(new Date());
         userService.updateByPrimaryKeySelective(user);
+        //设置最新用户信息到session中
+        session.setAttribute("user", userService.selectByPrimaryKey(user.getId()));
         return "person";
     }
 
@@ -97,7 +97,7 @@ public class UserController {
             HttpSession session,
             @RequestParam("oldPassword")String oldPassword,
             @RequestParam("newPassword")String newPassword){
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = ((User) session.getAttribute("user")).getId();
         if (oldPassword != null && newPassword != null && userId != null) {
             return userService.changePassword(userId, oldPassword, newPassword);
         }else{

@@ -1,5 +1,6 @@
 package com.hxb.oldBook.aspect;
 
+import com.hxb.oldBook.utils.RequestUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -8,9 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 /**
  * @Package: com.hxb.oldBook.aspect
@@ -45,13 +43,7 @@ public class LogAspect {
      */
     @Before("pointCut()")
     public void recordLog(JoinPoint joinPoint) {
-        /*
-            1.从RequestContextHolder中获取 RequestAttributes 对象
-            2.再类型转换  将RequestAttributes接口转换为其实现类ServletRequestAttributes
-            3.调用getRequest()获取HttpServletRequest对象实例
-         */
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
+        HttpServletRequest request = RequestUtil.getRequest();
 
         //请求的URL
         logger.info("url={}", request.getRequestURL());
