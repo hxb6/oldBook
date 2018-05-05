@@ -15,7 +15,8 @@ public enum ResultEnum {
     ALREADY_REGISTER(2,"该用户已经注册"),
     ACCOUNT_PASSWORD_ERROR(3,"用户或密码错误"),
     ACCOUNT_NOT_VALID(4,"该账号已被管理员限制使用"),
-    OLD_PASSWORD_ERROR(5,"旧密码错误");
+    OLD_PASSWORD_ERROR(5,"旧密码错误"),
+    QUESTION_ERROR(6,"密保答案错误");
 
     /**
      * 返回的状态码

@@ -31,6 +31,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 
     /**
+     * 重置密码 明文不包括盐
+     */
+    public static final String PASSWORD = "123456";
+    /**
      * 注入用户mapper接口对象
      */
     @Autowired
@@ -153,5 +157,67 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             throw new CustomException(ResultEnum.OLD_PASSWORD_ERROR);
         }
 
+    }
+
+    /**
+     * 修改密保问题与密保答案
+     *
+     * @param encryptedProblem  密保问题
+     * @param encryptedQuestion 密保答案
+     * @return 最新的User对象
+     */
+    @Override
+    public User changeEncrypted(String encryptedProblem, String encryptedQuestion) {
+        //获取会话session
+        HttpSession session = RequestUtil.getSession();
+        //获取用户id
+        Integer userId = ((User) session.getAttribute("user")).getId();
+        User user = userMapper.selectByPrimaryKey(userId);
+        /*
+            判断用户有没有输入密保问题和密保答案 没有输入的不更新 使用原来的密保问题和密保答案
+         设置新的密保问题和密保答案
+         */
+        if (encryptedProblem != null && !encryptedProblem.equals("")) {
+            user.setEncryptedProblem(encryptedProblem);
+        }
+        if (encryptedQuestion != null && !encryptedQuestion.equals("")) {
+            user.setEncryptedQuestion(encryptedQuestion);
+        }
+        //根据主键更新属性不为空的对象
+        userMapper.updateByPrimaryKeySelective(user);
+        //返回最新对象
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+
+    /**
+     * 重置密码成123456普通用户需要校验密保问题 管理员可直接重置
+     *
+     * @param encryptedQuestion
+     * @return Result结果集
+     */
+    @Override
+    public Result resetPassword(String encryptedQuestion) {
+        //获取会话session
+        HttpSession session = RequestUtil.getSession();
+        //获取前一步填写用户账号时保存到session中的用户id
+        Integer userId = ((Integer) session.getAttribute("userId"));
+        User user = userMapper.selectByPrimaryKey(userId);
+        //得到用户角色
+        short roleType = user.getRoleType();
+        //普通用户 需要校验密保 管理员则不需要
+        if (roleType == 1) {
+            if (encryptedQuestion != null && encryptedQuestion.equals(user.getEncryptedQuestion())) {
+                user.setPassword(MD5Util.getPassword(PASSWORD + user.getSalt()));
+                userMapper.updateByPrimaryKeySelective(user);
+                return ResultUtil.success(ResultEnum.SUCCESS);
+            } else {
+                throw new CustomException(ResultEnum.QUESTION_ERROR);
+            }
+        } else {
+            user.setPassword(MD5Util.getPassword(PASSWORD + user.getSalt()));
+            userMapper.updateByPrimaryKeySelective(user);
+            return ResultUtil.success(ResultEnum.SUCCESS);
+        }
     }
 }

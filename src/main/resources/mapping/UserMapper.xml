@@ -16,6 +16,8 @@
     <result column="register_merchant_time" jdbcType="TIMESTAMP" property="registerMerchantTime" />
     <result column="user_modified_time" jdbcType="TIMESTAMP" property="userModifiedTime" />
     <result column="is_valid" jdbcType="BIT" property="isValid" />
+    <result column="encrypted_problem" jdbcType="VARCHAR" property="encryptedProblem" />
+    <result column="encrypted_question" jdbcType="VARCHAR" property="encryptedQuestion" />
   </resultMap>
 
   <select id="selectUserByUserAccount" parameterType="string" resultMap="BaseResultMap">

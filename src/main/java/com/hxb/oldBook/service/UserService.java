@@ -44,4 +44,19 @@ public interface UserService extends BaseService<User> {
      * @return 封装成结果集
      */
     Result changePassword(Integer id,String oldPassword,String newPassword);
+
+    /**
+     * 修改密保问题与密保答案
+     * @param encryptedProblem 密保问题
+     * @param encryptedQuestion 密保答案
+     * @return 最新的User对象
+     */
+    User changeEncrypted(String encryptedProblem,String encryptedQuestion);
+
+    /**
+     * 重置密码成123456普通用户需要校验密保问题 管理员可直接重置
+     * @param encryptedQuestion
+     * @return Result结果集
+     */
+    Result resetPassword(String encryptedQuestion);
 }

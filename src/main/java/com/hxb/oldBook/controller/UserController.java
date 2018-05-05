@@ -44,6 +44,20 @@ public class UserController {
     }
 
     /**
+     * 进入修改密保页面 传回密保问题和答案
+     * @return thymeleaf 模板 修改密保页面
+     */
+    @RequestMapping("/toChangeEncrypted")
+    public String toChangeEncrypted(HttpSession session, Model model){
+        User user = (User) session.getAttribute("user");
+        Integer userId = user.getId();
+        user = userService.selectByPrimaryKey(userId);
+        model.addAttribute("encryptedProblem", user.getEncryptedProblem());
+        model.addAttribute("encryptedQuestion",user.getEncryptedQuestion());
+        return "changeEncrypted";
+    }
+
+    /**
      * 用户退出登录 清除登录状态
      * @param session
      * @return
@@ -104,4 +118,22 @@ public class UserController {
             return ResultUtil.error("密码不能为空", null);
         }
     }
+
+
+    /**
+     * 修改密保设置
+     * @param encryptedProblem  密保问题
+     * @param encryptedQuestion 密保答案
+     * @return thymeleaf 模板
+     */
+    @PostMapping("/changeEncrypted")
+    public String changeEncrypted(@RequestParam("encryptedProblem") String encryptedProblem,
+                                  @RequestParam("encryptedQuestion") String encryptedQuestion,
+                                  Model model){
+        User user =  userService.changeEncrypted(encryptedProblem, encryptedQuestion);
+        model.addAttribute("encryptedProblem", user.getEncryptedProblem());
+        model.addAttribute("encryptedQuestion",user.getEncryptedQuestion());
+        return "changeEncrypted";
+    }
+
 }

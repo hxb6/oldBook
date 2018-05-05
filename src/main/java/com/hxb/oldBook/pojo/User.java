@@ -52,21 +52,21 @@ public class User {
     @Column(name = "is_merchant")
     private Boolean isMerchant;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     /**
      * 注册成为用户的时间
      */
     @Column(name = "user_register_time")
     private Date userRegisterTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     /**
      * 用户注册成为商家的时间
      */
     @Column(name = "register_merchant_time")
     private Date registerMerchantTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss" ,timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     /**
      * 用户信息最近修改的时间
      */
@@ -78,6 +78,18 @@ public class User {
      */
     @Column(name = "is_valid")
     private Boolean isValid;
+
+    /**
+     * 密保问题(忘记密码时使用)
+     */
+    @Column(name = "encrypted_problem")
+    private String encryptedProblem;
+
+    /**
+     * 密保答案(忘记密码时使用)
+     */
+    @Column(name = "encrypted_question")
+    private String encryptedQuestion;
 
     /**
      * 获取用户id
@@ -277,21 +289,41 @@ public class User {
         this.isValid = isValid;
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userAccount='" + userAccount + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", roleType=" + roleType +
-                ", isMerchant=" + isMerchant +
-                ", userRegisterTime=" + userRegisterTime +
-                ", registerMerchantTime=" + registerMerchantTime +
-                ", userModifiedTime=" + userModifiedTime +
-                ", isValid=" + isValid +
-                '}';
+    /**
+     * 获取密保问题(忘记密码时使用)
+     *
+     * @return encrypted_problem - 密保问题(忘记密码时使用)
+     */
+    public String getEncryptedProblem() {
+        return encryptedProblem;
     }
+
+    /**
+     * 设置密保问题(忘记密码时使用)
+     *
+     * @param encryptedProblem 密保问题(忘记密码时使用)
+     */
+    public void setEncryptedProblem(String encryptedProblem) {
+        this.encryptedProblem = encryptedProblem == null ? null : encryptedProblem.trim();
+    }
+
+    /**
+     * 获取密保答案(忘记密码时使用)
+     *
+     * @return encrypted_question - 密保答案(忘记密码时使用)
+     */
+    public String getEncryptedQuestion() {
+        return encryptedQuestion;
+    }
+
+    /**
+     * 设置密保答案(忘记密码时使用)
+     *
+     * @param encryptedQuestion 密保答案(忘记密码时使用)
+     */
+    public void setEncryptedQuestion(String encryptedQuestion) {
+        this.encryptedQuestion = encryptedQuestion == null ? null : encryptedQuestion.trim();
+    }
+
+
 }
