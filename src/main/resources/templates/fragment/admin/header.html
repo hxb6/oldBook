@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<div class="head" th:fragment="header">
+    <span class="headLeft" th:text="${session.user.userName}"/>
+    <div class="headright"><span>欢迎</span>
+        <span><a href="/user/loginOut">退出
+						</a></span></div>
+</div>
 </html>

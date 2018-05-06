@@ -108,7 +108,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         if (user == null) {
             throw new CustomException(ResultEnum.ACCOUNT_PASSWORD_ERROR);
         } else {
-            /**
+            /*
              * 检查该账号是否可用
              */
             if (!user.getIsValid()) {

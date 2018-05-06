@@ -1,148 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>后台管理</title>
-    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" th:href="@{/bootstrap-table/src/bootstrap-table.css}"/>
-    <link th:href="@{/chosen/chosen.css}" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" th:href="@{/css/norm.css}"/>
-    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/bootstrap-table/src/bootstrap-table.js}"></script>
-    <script th:src="@{/bootstrap-table/src/locale/bootstrap-table-zh-CN.js}"></script>
-    <script th:src="@{/chosen/chosen.jquery.min.js}"></script>
-    <script th:src="@{/js/norm.js}"></script>
+<!-- 引入公共js和css -->
+<head th:replace="/fragment/admin/head :: head">
 </head>
 
 <body>
-<!-- 公共头部 需提出 -->
-<div class="head">
-    <span class="headLeft" th:text="${session.user.userName}"/>
-    <div class="headright"><span>欢迎</span>
-        <span><a href="/user/loginOut">退出
-						</a></span></div>
-</div>
+<!-- 公共顶部  -->
+<div th:replace="/fragment/admin/header :: header"></div>
 <div class="container">
-    <!--公共侧边栏 需提出-->
-    <div class="navleft">
-        <li><span class="glyphicon glyphicon-book" aria-hidden="true"></span>书籍信息
-            <ul>
-                <li class="" onclick="test1()">书籍分类</li>
-            </ul>
-        </li>
-        <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户管理
-            <ul>
-                <li class="" onclick="">用户列表</li>
-                <li class="" onclick="test2()">申请处理</li>
-            </ul>
-        </li>
-        <li><span class="glyphicon glyphicon-list" aria-hidden="true"></span>订单
-            <ul>
-                <li onclick="" id="content_Order">订单管理</li>
-            </ul>
-        </li>
-    </div>
+    <!--公共侧边栏-->
+    <div th:replace="/fragment/admin/sidebar :: sidebar"></div>
     <!-- 内容-->
     <div class="content">
-        <!--商品管理-->
-        <div class="content_main" id="content_Goods1">
-            <div class="content_head">
-                <span>书籍分类</span>
-                <span class="content_span">
-						<button type="button" class="btn btn-default informGoods"
-                                onclick="">添加分类</button></span>
-            </div>
-            <!--商品信息-->
-            <div class="table-overflow form-group informGoods">
-                <table class="table media-table" id="table">
-                    <thead>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+        <div class="content_head">
+            <span>二手书籍交易系统-后台管理</span>
         </div>
         <!-- 内容-->
     </div>
 </div>
 </body>
-<script>
-    function test1() {
-        var data = [{
-            "id": "1",
-            "inform": "软件工程",
-            "price": "15",
-            "state": "在线",
-            "operate": "删除",
-        },];
-        var tableOption = {
-            data: data,
-            //  url: '/HXB',         //请求后台的URL（*）
-            method: 'get',                      //请求方式（*）
-            toolbar: '#toolbar',                //工具按钮用哪个容器
-            striped: true,                      //是否显示行间隔色
-            clickToSelect: true,
-            search: true,
-            pagination: true,
-            pageSize: 10,
-            pageList: [5, 10, 15, 20],
-            showColumns: true,
-            sortable: true,
-            locale: "zh-CN",
-            showRefresh: true,//刷新按钮
-            columns: [
-                {field: 'id', title: '编号'},
-                {field: 'inform', title: '信息'},
-                {field: 'price', title: '价格'},
-                {field: 'state', title: '状态',},
-                {field: 'operate', title: '操作'},
-            ]
-
-        };
-        $('#table').bootstrapTable(tableOption);
-    }
-</script>
-
-
-<!--订单管理-->
-<script>
-    function test2() {
-        var data_order = [{
-            "or_id": "订单号",
-            "or_peo": "收件人",
-            "or_state": "订单状态",
-            "or_price": "订单总价",
-            "creatTime": "创建时间",
-            "or_operate": "操作",
-        },];
-        var tableOrder = {
-            data: data_order,
-            //  url: '/HXB',         //请求后台的URL（*）
-            method: 'get',                      //请求方式（*）
-            toolbar: '#toolbar',                //工具按钮用哪个容器
-            striped: true,                      //是否显示行间隔色
-            clickToSelect: true,
-            search: true,
-            pagination: true,
-            pageSize: 10,
-            pageList: [5, 10, 15, 20],
-            showColumns: true,
-            sortable: true,
-            locale: "zh-CN",
-            showRefresh: true,//刷新按钮
-            columns: [
-                {field: 'or_id', title: '订单号'},
-                {field: 'or_peo', title: '收件人'},
-                {field: 'or_state', title: '订单状态'},
-                {field: 'or_price', title: '订单总价',},
-                {field: 'creatTime', title: '创建时间',},
-                {field: 'or_operate', title: '操作'},
-            ]
-
-        };
-        $('#table').bootstrapTable(tableOrder);
-    }
-</script>
 </html>

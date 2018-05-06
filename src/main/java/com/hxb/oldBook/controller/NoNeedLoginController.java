@@ -86,9 +86,7 @@ public class NoNeedLoginController {
      */
     @PostMapping("/resetPassword")
     @ResponseBody
-    public Result resetPassword(@RequestParam("encryptedQuestion") String encryptedQuestion,HttpSession session){
-        //重置密码成功 清除忘记密码这个步骤保存的用户id
-        session.removeAttribute("userId");
+    public Result resetPassword(@RequestParam("encryptedQuestion") String encryptedQuestion){
         return userService.resetPassword(encryptedQuestion);
     }
 

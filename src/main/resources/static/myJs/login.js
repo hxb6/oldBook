@@ -21,8 +21,14 @@ function login() {
                 $("#userAccount").select();
                 $("#errorInfo").text(object.message);
             } else {
-                //登录成功 进入首页
-                window.location.href = "/index";
+                //如果用户是普通用户 进入首页 否则进入后台管理页面
+                if(object.data.roleType == 1){
+                    //进入首页
+                    window.location.href = "/index";
+                } else {
+                    //进入后台管理页面
+                    window.location.href = "/admin/toAdmin";
+                }
             }
         }
     };

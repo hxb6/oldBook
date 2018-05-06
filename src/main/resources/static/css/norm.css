@@ -27,11 +27,11 @@
 		    .content_head>span{font-size: 24px; font-family: "黑体"; padding: 3px 5px;}
 			.content_span{ text-align: right;}
 			.content_span>.btn-default{ float: right; background-color: #5185ed; color: white; }
-			
+
 			/*添加商品*/
 			.addGoods{display: none;}
 			.content_add{margin: 20px;}
 			.chosen-container{width: 20%;}
-			
+
             /*模块*/
            #content_Cate1,#content_Order1{display: none;}

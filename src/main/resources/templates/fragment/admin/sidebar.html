@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<div class="navleft" th:fragment="sidebar">
+    <li><span class="glyphicon glyphicon-book" aria-hidden="true"></span>书籍信息
+        <ul>
+            <li id="bookType" class="" onclick="test()">书籍分类</li>
+        </ul>
+    </li>
+    <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户管理
+        <ul>
+            <li id="userList" class="" onclick="">用户列表</li>
+            <li id="dealApply" class="" onclick="window.location.href='/admin/toDealApply'">申请处理</li>
+        </ul>
+    </li>
+    <li><span class="glyphicon glyphicon-list" aria-hidden="true"></span>订单
+        <ul>
+            <li id="dealOrder" onclick="">订单管理</li>
+        </ul>
+    </li>
+</div>
 </html>
