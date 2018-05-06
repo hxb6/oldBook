@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 引入公共js和css -->
+<head th:replace="/fragment/admin/head :: head">
+</head>
+
+<body>
+<!-- 公共顶部  -->
+<div th:replace="/fragment/admin/header :: header"></div>
+<div class="container">
+    <!--公共侧边栏-->
+    <div th:replace="/fragment/admin/sidebar :: sidebar"></div>
+    <!-- 内容-->
+    <div class="content">
+        <div class="content_main">
+            <div class="content_head">
+                <span>二手书籍交易系统-后台管理</span>
+            </div>
+        </div>
+        <!-- 内容-->
+    </div>
+</div>
+</body>
+</html>
