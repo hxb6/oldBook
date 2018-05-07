@@ -11,6 +11,15 @@
     <result column="return_message" jdbcType="VARCHAR" property="returnMessage" />
     <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
     <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
+
+  <select id="queryByUserId" resultMap="BaseResultMap">
+    SELECT * FROM apply_for_business WHERE user_id = #{userId}
+  </select>
+
+  <select id="queryByPage" resultMap="BaseResultMap">
+    SELECT * FROM apply_for_business
+    LIMIT #{num},#{pageSize}
+  </select>
 </mapper>

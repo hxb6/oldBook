@@ -57,36 +57,23 @@
 </body>
 <!--申请处理维护-->
 <script>
+    /**
+     * 当前页面导航栏颜色变深
+     */
     $("#dealApply").addClass("activea");
-    var data_order = [{
-        "or_peo": "收件人",
-        "or_state": "订单状态",
-        "creatTime": "创建时间",
-        "status" : "未审批"
-    },{
-        "or_peo": "收件人",
-        "or_state": "订单状态",
-        "creatTime": "创建时间",
-        "status" : "未审批"
-    },{
-        "or_peo": "收件人",
-        "or_state": "订单状态",
-        "creatTime": "创建时间",
-        "status" : "未审批"
-    },];
     var tableOrder = {
-        data: data_order,
-        //  url: '/HXB',         //请求后台的URL（*）
-        method: 'get',                      //请求方式（*）
-        toolbar: '#toolbar',                //工具按钮用哪个容器
+        url: "/admin/getAllApplyForBusiness",         //请求后台的URL（*）
+        method: "get",                      //请求方式（*）
+        toolbar: "#toolbar",                //工具按钮用哪个容器
         striped: true,                      //是否显示行间隔色
         cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
         pagination: true,                   //是否显示分页（*）
+        sidePagination: "server",           //分页方式 client客户端分页 server服务端分页
         sortable: false,                     //是否启用排序
         sortOrder: "asc",                   //排序方式
         pageNumber: 1,                       //初始化加载第一页，默认第一页
         pageSize: 10,                       //每页的记录行数（*）
-        pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+        pageList: [10, 15, 20, 50],        //可供选择的每页的行数（*）
         search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
         strictSearch: true,
         showColumns: true,                  //是否显示所有的列
@@ -109,30 +96,39 @@
             {
                 title: "申请人",
                 align: "center",
-                field: "or_peo"
+                field: "userId"
             },
             {
-                title: "申请人账号",
+                title: "申请原因",
                 align: "center",
-                field: "or_state"
+                field: "applyReason"
             },
             {
                 title: "申请时间",
                 align: "center",
-                field: "creatTime"
+                field: "applyTime"
             },
             {
                 title: "审批状态",
                 align: "center",
-                field: "status"
+                formatter: function (value, row, index) {
+                    return row.status == 0 ? "未审批" : "已审批";
+                }
             },
             {
                 title: '操作',
                 align: "center",
+                /**
+                 * 如果申请未审批 管理员必须去审批 审批通过或不通过都可可以删除该记录 但不能再审批
+                 * @param value
+                 * @param row
+                 * @param index
+                 * @returns {string}
+                 */
                 formatter: function (value, row, index) {
-                    return '<a title="审批" data-toggle="modal"  data-target="#myModal"><span class="glyphicon glyphicon-edit" ></span></a>&nbsp;&nbsp;&nbsp;' +
-                        '<a title="删除" data-toggle="modal"  data-target="#myModal"><span class="glyphicon glyphicon-remove" ></span></a>';
-
+                    var html1 = '<a title="审批" data-toggle="modal"  data-target="#myModal"><span class="glyphicon glyphicon-edit" ></span></a>';
+                    var html2 = '<a title="删除" data-toggle="modal"  data-target="#myModal"><span class="glyphicon glyphicon-remove" ></span></a>';
+                    return row.status == 0 ? html1 : html2;
                 }
             },
         ]

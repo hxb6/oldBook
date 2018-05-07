@@ -1,8 +1,11 @@
 package com.hxb.oldBook.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import javax.persistence.*;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "apply_for_business")
 public class ApplyForBusiness {
     @Id
@@ -29,12 +32,14 @@ public class ApplyForBusiness {
     /**
      * 申请成为商家的时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     @Column(name = "apply_time")
     private Date applyTime;
 
     /**
      * 管理员审批时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     @Column(name = "approval_time")
     private Date approvalTime;
 
@@ -42,7 +47,7 @@ public class ApplyForBusiness {
      * 申请成为商家的用户id
      */
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
     /**
      * @return id
@@ -153,7 +158,7 @@ public class ApplyForBusiness {
      *
      * @return user_id - 申请成为商家的用户id
      */
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
@@ -162,7 +167,7 @@ public class ApplyForBusiness {
      *
      * @param userId 申请成为商家的用户id
      */
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

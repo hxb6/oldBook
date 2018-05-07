@@ -70,4 +70,14 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     public int updateByPrimaryKeySelective(T object) {
         return mapper.updateByPrimaryKeySelective(object);
     }
+
+    /**
+     * 得到数据总数
+     *
+     * @return
+     */
+    @Override
+    public int getCount(T object) {
+        return mapper.selectCount(object);
+    }
 }

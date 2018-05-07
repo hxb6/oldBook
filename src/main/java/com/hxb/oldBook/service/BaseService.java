@@ -47,5 +47,11 @@ public interface BaseService<T>{
      */
    int updateByPrimaryKeySelective(T object);
 
+    /**
+     * 得到数据总数
+     * @return
+     */
+   int getCount(T object);
+
 
 }

@@ -14,6 +14,7 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script th:src="@{/js/jquery-3.1.1.js}"></script>
     <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/myJs/apply.js}"></script>
 </head>
 <body>
 <!-- 公共头部 -->
@@ -29,32 +30,35 @@
 
 
     <!-- 申请成为商家信息div -->
-    <div class="Content pull-right" style="display: none">
+    <div class="Content pull-right" id="apply" style="display: none">
         <p class="Content-p">申请成为商家</p>
         <div class="ContentDiv">
             <span>申&nbsp;请&nbsp;原&nbsp;因</span>
             <div class="input-group">
-                <textarea type="text" id="userAccount" name="userAccount" class="form-control"></textarea>
+                <textarea type="text" id="applyReason" rows="5" name="applyReason" class="form-control"></textarea>
             </div>
 
             <div class="input-group" style="text-align: left">
-                <button type="button" onclick="" class="btn_width">申请</button>
+                <button type="button" onclick="apply()" class="btn_width">申请</button>
             </div>
         </div>
     </div>
-    <!-- 申请请求审批信息 -->
-    <div class="Content pull-right">
+    <!-- 申请请求审批回执信息 -->
+    <div class="Content pull-right" id="backMessage" style="display: none">
+        <p class="Content-p">申请成为商家</p>
         <div class="ContentDiv">
-            <div class="input-group">
-                <span class="input-group-addon">申&nbsp;请&nbsp;状&nbsp;态</span>
-                <input type="text"  value="暂未审批" style="text-align: center" disabled="disabled" class="form-control"/>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">系&nbsp;统&nbsp;消&nbsp;息</span>
-                <input type="text" value="管理员正在处理中,请耐心等待" style="text-align: center" disabled="disabled"   class="form-control"/>
-            </div>
+            <p><span class="ContentDiv-left">申请原因:</span><span id="applyReasonBack"/></p>
+            <p><span class="ContentDiv-left">审批状态:</span><span id="applyStatus"/></p>
+            <p><span class="ContentDiv-left">系统消息:</span><span id="returnMessage"/></p>
+            <p><span class="ContentDiv-left">申请时间:</span><span id="applyTime"/></p>
         </div>
     </div>
 </div>
 </body>
+<script>
+    /**
+     * 初始化审批页面信息
+     */
+    checkStatus();
+</script>
 </html>

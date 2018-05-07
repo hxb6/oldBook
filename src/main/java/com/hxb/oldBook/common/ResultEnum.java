@@ -9,6 +9,7 @@ package com.hxb.oldBook.common;
 public enum ResultEnum {
 
     SUCCESS(1,"请求成功"),
+    FAILE(7,"请求失败"),
     SUCCESS_NULL(1,"请求成功,但暂无相关数据"),
     REGISTER_SUCCESS(1,"注册成功"),
     ERROR(-1,"未知错误"),
