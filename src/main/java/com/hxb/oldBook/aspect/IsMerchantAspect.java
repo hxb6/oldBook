@@ -2,6 +2,7 @@ package com.hxb.oldBook.aspect;
 
 import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.utils.RequestUtil;
+import com.hxb.oldBook.utils.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -43,10 +44,8 @@ public class IsMerchantAspect {
      */
     @Around("pointCut()")
     public Object checkIsMerchant(ProceedingJoinPoint pjp) throws Throwable{
-        //获取会话session
-        HttpSession session = RequestUtil.getSession();
-        //获取登录时保存在session中的登录用户信息
-        User user = (User) session.getAttribute("user");
+        //从session中得到登录用户
+        User user = UserUtil.getUserFormSession();
         /*
             如果用户是商家 继续执行后续操作
             否则前去申请成为商家页面

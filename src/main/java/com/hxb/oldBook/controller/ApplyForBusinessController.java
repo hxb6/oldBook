@@ -1,9 +1,11 @@
 package com.hxb.oldBook.controller;
 
 import com.hxb.oldBook.common.Result;
+import com.hxb.oldBook.common.ResultEnum;
 import com.hxb.oldBook.pojo.ApplyForBusiness;
 import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.service.ApplyForBusinessService;
+import com.hxb.oldBook.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +56,18 @@ public class ApplyForBusinessController {
         Integer userId = ((User) session.getAttribute("user")).getId();
         //根据id查询审批记录
         return applyForBusinessService.queryByUserId(userId);
+    }
+
+    /**
+     * 设置该条不合格信息状态不可用
+     * @param applyForBusiness
+     * @return
+     */
+    @PostMapping("/updateNotActive")
+    @ResponseBody
+    public Result updateNotActiveByUserId(@RequestBody ApplyForBusiness applyForBusiness){
+        applyForBusinessService.updateNotActive(applyForBusiness);
+        return ResultUtil.success(ResultEnum.SUCCESS);
     }
 
 

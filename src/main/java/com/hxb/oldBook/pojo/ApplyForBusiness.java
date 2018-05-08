@@ -5,12 +5,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
 import javax.persistence.*;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "apply_for_business")
 public class ApplyForBusiness {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    /**
+     * 申请人姓名
+     */
+    @Column(name = "apply_person_name")
+    private String applyPersonName;
 
     /**
      * 审批状态  0-未审批 1-审批通过 2-审批不通过
@@ -32,16 +39,22 @@ public class ApplyForBusiness {
     /**
      * 申请成为商家的时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "apply_time")
     private Date applyTime;
 
     /**
      * 管理员审批时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "approval_time")
     private Date approvalTime;
+
+    /**
+     * 该条记录是否可用 0-不可用 1-可用
+     */
+    @Column(name = "is_active")
+    private Boolean isActive;
 
     /**
      * 申请成为商家的用户id
@@ -61,6 +74,24 @@ public class ApplyForBusiness {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * 获取申请人姓名
+     *
+     * @return apply_person_name - 申请人姓名
+     */
+    public String getApplyPersonName() {
+        return applyPersonName;
+    }
+
+    /**
+     * 设置申请人姓名
+     *
+     * @param applyPersonName 申请人姓名
+     */
+    public void setApplyPersonName(String applyPersonName) {
+        this.applyPersonName = applyPersonName == null ? null : applyPersonName.trim();
     }
 
     /**
@@ -151,6 +182,24 @@ public class ApplyForBusiness {
      */
     public void setApprovalTime(Date approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    /**
+     * 获取该条记录是否可用 0-不可用 1-可用
+     *
+     * @return is_active - 该条记录是否可用 0-不可用 1-可用
+     */
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    /**
+     * 设置该条记录是否可用 0-不可用 1-可用
+     *
+     * @param isActive 该条记录是否可用 0-不可用 1-可用
+     */
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     /**

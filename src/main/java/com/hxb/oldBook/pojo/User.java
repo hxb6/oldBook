@@ -52,24 +52,27 @@ public class User {
     @Column(name = "is_merchant")
     private Boolean isMerchant;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+
     /**
      * 注册成为用户的时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "user_register_time")
     private Date userRegisterTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+
     /**
      * 用户注册成为商家的时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "register_merchant_time")
     private Date registerMerchantTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+
     /**
      * 用户信息最近修改的时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "user_modified_time")
     private Date userModifiedTime;
 

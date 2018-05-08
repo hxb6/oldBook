@@ -35,4 +35,18 @@ public interface ApplyForBusinessService extends BaseService<ApplyForBusiness> {
      * @return
      */
     List<ApplyForBusiness> queryByPage(Integer offset,Integer limit);
+
+    /**
+     * 管理员处理审批消息和更新用户信息
+     * @param applyForBusiness
+     * @return
+     */
+    Result dealApplyInfoAndUpdateUser(ApplyForBusiness applyForBusiness);
+
+    /**
+     * 更新申请信息记录不可被使用
+     * @param applyForBusiness
+     * @return
+     */
+    int updateNotActive(ApplyForBusiness applyForBusiness);
 }

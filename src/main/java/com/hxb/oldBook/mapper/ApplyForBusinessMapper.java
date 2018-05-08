@@ -7,7 +7,6 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface ApplyForBusinessMapper extends Mapper<ApplyForBusiness> {
-
     /**
      * 根据用户id查询其申请成为商家的记录
      * @param userId

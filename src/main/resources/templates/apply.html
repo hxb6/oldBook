@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>个人中心</title>
     <!--bootstrap的css-->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
     <!--自定义css-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <!--解决IE兼容-->
@@ -45,7 +45,9 @@
     </div>
     <!-- 申请请求审批回执信息 -->
     <div class="Content pull-right" id="backMessage" style="display: none">
-        <p class="Content-p">申请成为商家</p>
+        <p class="Content-p">申请成为商家&nbsp;&nbsp;&nbsp;<span id="againApply" onclick="updateNotActive()"
+                                                           style="display: none;font-size: 14px;cursor: pointer"
+                                                           class="glyphicon glyphicon-send">再次申请</span></p>
         <div class="ContentDiv">
             <p><span class="ContentDiv-left">申请原因:</span><span id="applyReasonBack"/></p>
             <p><span class="ContentDiv-left">审批状态:</span><span id="applyStatus"/></p>
@@ -60,5 +62,20 @@
      * 初始化审批页面信息
      */
     checkStatus();
+
+    function updateNotActive() {
+        $.ajax({
+            url: "/user/updateNotActive",
+            type: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "id": applyId,
+                "isActive": 0
+            }),
+            success : function () {
+                window.location.href = "/user/apply";
+            }
+        });
+    }
 </script>
 </html>

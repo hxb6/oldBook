@@ -9,6 +9,7 @@ import com.hxb.oldBook.service.UserService;
 import com.hxb.oldBook.utils.MD5Util;
 import com.hxb.oldBook.utils.RequestUtil;
 import com.hxb.oldBook.utils.ResultUtil;
+import com.hxb.oldBook.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
@@ -124,8 +125,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             //得到会话session
             HttpSession session = RequestUtil.getSession();
             //保存用户登录标记和信息到session中
-            session.setAttribute("user", user);
-            session.setAttribute("isLogin", "yes");
+            UserUtil.setNewUserIntoSession(user);
             return ResultUtil.success("登录成功", user);
         }
     }
@@ -168,10 +168,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
      */
     @Override
     public User changeEncrypted(String encryptedProblem, String encryptedQuestion) {
-        //获取会话session
-        HttpSession session = RequestUtil.getSession();
-        //获取用户id
-        Integer userId = ((User) session.getAttribute("user")).getId();
+        //获取session中保存的用户id
+        Integer userId = UserUtil.getUserId();
         User user = userMapper.selectByPrimaryKey(userId);
         /*
             判断用户有没有输入密保问题和密保答案 没有输入的不更新 使用原来的密保问题和密保答案

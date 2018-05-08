@@ -62,4 +62,15 @@ public class AdminDealApplyController {
             return null;
         }
     }
+
+    /**
+     * 管理员处理审批消息和更新用户信息
+     * @param applyForBusiness
+     * @return
+     */
+    @PostMapping("/dealApplyInfoAndUpdateUser")
+    @ResponseBody
+    public Result dealApplyInfoAndUpdateUser(@RequestBody ApplyForBusiness applyForBusiness){
+        return applyForBusinessService.dealApplyInfoAndUpdateUser(applyForBusiness);
+    }
 }

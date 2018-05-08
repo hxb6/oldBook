@@ -2,6 +2,7 @@ package com.hxb.oldBook.aspect;
 
 import com.hxb.oldBook.pojo.User;
 import com.hxb.oldBook.utils.RequestUtil;
+import com.hxb.oldBook.utils.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -34,8 +35,8 @@ public class AdminAspect {
 
     @Around("pointCut()")
     public Object checkLogin(ProceedingJoinPoint pjp) throws Throwable {
-        HttpSession session = RequestUtil.getSession();
-        User user = (User) session.getAttribute("user");
+        //从session中得到登录用户
+        User user = UserUtil.getUserFormSession();
         if (user.getRoleType() == 1) {
             logger.info("------登录用户不是管理员-----");
             return "redirect:/toLogin";
