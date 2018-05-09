@@ -3,12 +3,13 @@
 <div class="navleft" th:fragment="sidebar">
     <li><span class="glyphicon glyphicon-book" aria-hidden="true"></span>书籍信息
         <ul>
-            <li id="bookType" class="" onclick="test()">书籍分类</li>
+            <li id="bookType" class="" onclick="window.location.href='/admin/toAdmin'">书籍分类</li>
+            <li id="bookList" class="" >书籍列表</li>
         </ul>
     </li>
     <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>用户管理
         <ul>
-            <li id="userList" class="" onclick="">用户列表</li>
+            <li id="userList" class="" onclick="window.location.href='/admin/toUserList'">用户列表</li>
             <li id="dealApply" class="" onclick="window.location.href='/admin/toDealApply'">申请处理</li>
         </ul>
     </li>

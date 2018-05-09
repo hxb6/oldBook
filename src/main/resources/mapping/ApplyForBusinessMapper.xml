@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hxb.oldBook.mapper.ApplyForBusinessMapper">
-  <resultMap id="BaseResultMap" type="com.hxb.oldBook.pojo.ApplyForBusiness">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="apply_person_name" jdbcType="VARCHAR" property="applyPersonName" />
-    <result column="status" jdbcType="SMALLINT" property="status" />
-    <result column="apply_reason" jdbcType="VARCHAR" property="applyReason" />
-    <result column="return_message" jdbcType="VARCHAR" property="returnMessage" />
-    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
-    <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
-    <result column="is_active" jdbcType="BIT" property="isActive" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.hxb.oldBook.pojo.ApplyForBusiness">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="apply_person_name" jdbcType="VARCHAR" property="applyPersonName"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="apply_reason" jdbcType="VARCHAR" property="applyReason"/>
+        <result column="return_message" jdbcType="VARCHAR" property="returnMessage"/>
+        <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime"/>
+        <result column="is_active" jdbcType="BIT" property="isActive"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
 
-  <select id="queryByUserId" resultMap="BaseResultMap">
-    SELECT * FROM apply_for_business WHERE user_id = #{userId} AND is_active = 1
-  </select>
+    <select id="queryByPage" parameterType="com.hxb.oldBook.common.TableParams" resultMap="BaseResultMap">
+        /* 排序方式 如果TableParams实例对象中的 排序字段或排序方式为null或为空的话 默认按申请时间降序(最新)排序 */
+        SELECT *
+        FROM apply_for_business
+        WHERE is_active = 1
+        AND status = 0
+        ORDER BY
+        <choose>
+            <when test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">
+                ${sortName} ${sortOrder}
+            </when>
+            <otherwise>
+                apply_time DESC
+            </otherwise>
+        </choose>
+        LIMIT #{offset},#{limit}
+    </select>
 
-  <select id="queryByPage" resultMap="BaseResultMap">
-    SELECT * FROM apply_for_business
-    WHERE  is_active = 1
-    LIMIT #{num},#{pageSize}
-  </select>
+    <select id="queryByUserId" resultMap="BaseResultMap">
+      SELECT *
+      FROM apply_for_business
+      WHERE user_id = #{userId}
+      AND is_active = 1
+    </select>
+
+    <select id="getCountByIsActive" resultType="integer">
+        SELECT  COUNT(*)
+        FROM apply_for_business
+        WHERE  is_active = #{isActive}
+    </select>
 </mapper>

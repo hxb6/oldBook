@@ -82,6 +82,10 @@ logging:
 mybatis:
   #扫描mapper配置文件配置
   mapper-locations: classpath:mapping/*.xml
+  #开启驼峰命名转换
+  configuration:
+    mapUnderscoreToCamelCase: true
+    map-underscore-to-camel-case: true
 
 
 

@@ -3,6 +3,7 @@ package com.hxb.oldBook.controller.admin;
 import com.hxb.oldBook.common.Result;
 import com.hxb.oldBook.common.ResultEnum;
 import com.hxb.oldBook.common.TablePageResult;
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.ApplyForBusiness;
 import com.hxb.oldBook.service.ApplyForBusinessService;
 import com.hxb.oldBook.utils.ResultUtil;
@@ -28,8 +29,10 @@ public class AdminDealApplyController {
      */
     @Autowired
     private ApplyForBusinessService applyForBusinessService;
+
     /**
      * 管理员处理请求信息 更新记录
+     *
      * @param applyForBusiness
      * @return
      */
@@ -46,17 +49,17 @@ public class AdminDealApplyController {
     }
 
     /**
-     * 根据分页得到数据记录
-     * @param offset 第几条记录
-     * @param limit 前台设置的每页多少条记录
-     * @return
+     * 根据表格参数得到对应记录
+     * 得到未审批的记录 status = 0
+     * @param tableParams 表格参数对象
+     * @return bootstrap table必须接受的对象封装 包含 rows和total两个参数
      */
     @GetMapping("/getAllApplyForBusiness")
     @ResponseBody
-    public TablePageResult selectAllApplyForBusiness(Integer offset,Integer limit){
-        List<ApplyForBusiness> lists = applyForBusinessService.queryByPage(offset, limit);
-        Integer total = applyForBusinessService.getCount(new ApplyForBusiness());
-        if (lists != null && lists.size() > 0){
+    public TablePageResult selectAllApplyForBusiness(TableParams tableParams) {
+        List<ApplyForBusiness> lists = applyForBusinessService.queryByPage(tableParams);
+        Integer total = applyForBusinessService.getCountByIsActive(1);
+        if (lists != null && lists.size() > 0) {
             return TablePageResultUtil.success(total, lists);
         } else {
             return null;
@@ -65,12 +68,29 @@ public class AdminDealApplyController {
 
     /**
      * 管理员处理审批消息和更新用户信息
+     *
      * @param applyForBusiness
      * @return
      */
     @PostMapping("/dealApplyInfoAndUpdateUser")
     @ResponseBody
-    public Result dealApplyInfoAndUpdateUser(@RequestBody ApplyForBusiness applyForBusiness){
+    public Result dealApplyInfoAndUpdateUser(@RequestBody ApplyForBusiness applyForBusiness) {
         return applyForBusinessService.dealApplyInfoAndUpdateUser(applyForBusiness);
+    }
+
+    /**
+     * 管理员删除 申请记录
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteById")
+    @ResponseBody
+    public Result deleteById(@RequestParam("id") Integer id) {
+        int i = applyForBusinessService.deleteByPrimaryKey(id);
+        if (i > 0) {
+            return ResultUtil.success(ResultEnum.SUCCESS);
+        } else {
+            return ResultUtil.error(ResultEnum.FAILE);
+        }
     }
 }

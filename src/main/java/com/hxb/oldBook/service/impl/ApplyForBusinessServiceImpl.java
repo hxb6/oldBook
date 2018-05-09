@@ -2,6 +2,7 @@ package com.hxb.oldBook.service.impl;
 
 import com.hxb.oldBook.common.Result;
 import com.hxb.oldBook.common.ResultEnum;
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.mapper.ApplyForBusinessMapper;
 import com.hxb.oldBook.mapper.UserMapper;
 import com.hxb.oldBook.pojo.ApplyForBusiness;
@@ -81,15 +82,14 @@ public class ApplyForBusinessServiceImpl extends BaseServiceImpl<ApplyForBusines
     }
 
     /**
-     * 分页查询数据
-     *
-     * @param offset 从第几条记录开始查询
-     * @param limit  每页的记录数
-     * @return
+     * 根据表格参数得到对应记录
+     * 得到未审批的记录 status = 0
+     * @param tableParams 表格参数对象
+     * @return 返回满足条件的数据集合
      */
     @Override
-    public List<ApplyForBusiness> queryByPage(Integer offset, Integer limit) {
-        return applyForBusinessMapper.queryByPage(offset, limit);
+    public List<ApplyForBusiness> queryByPage(TableParams tableParams) {
+        return applyForBusinessMapper.queryByPage(tableParams);
     }
 
     /**
@@ -102,8 +102,9 @@ public class ApplyForBusinessServiceImpl extends BaseServiceImpl<ApplyForBusines
     @Transactional
     @Override
     public Result dealApplyInfoAndUpdateUser(ApplyForBusiness applyForBusiness) {
+        Date date = new Date();
         //设置管理员审批时间
-        applyForBusiness.setApprovalTime(new Date());
+        applyForBusiness.setApprovalTime(date);
         //获取申请人id
         Integer userId = applyForBusiness.getUserId();
         /*
@@ -117,6 +118,7 @@ public class ApplyForBusinessServiceImpl extends BaseServiceImpl<ApplyForBusines
             User user = userMapper.selectByPrimaryKey(userId);
             //设置是否是商家标志 为true 用户成为商家
             user.setIsMerchant(true);
+            user.setRegisterMerchantTime(date);
             applyForBusiness.setReturnMessage(RETURN_MESSAGE_SUCCESS);
             //更新用户与审批消息记录
             applyForBusinessMapper.updateByPrimaryKeySelective(applyForBusiness);
@@ -138,5 +140,17 @@ public class ApplyForBusinessServiceImpl extends BaseServiceImpl<ApplyForBusines
     @Override
     public int updateNotActive(ApplyForBusiness applyForBusiness) {
         return applyForBusinessMapper.updateByPrimaryKeySelective(applyForBusiness);
+    }
+
+
+    /**
+     * 根据记录是否可悲查询得到相应记录总和
+     *
+     * @param isActive
+     * @return
+     */
+    @Override
+    public Integer getCountByIsActive(Integer isActive) {
+        return applyForBusinessMapper.getCountByIsActive(isActive);
     }
 }

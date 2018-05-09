@@ -1,5 +1,6 @@
 package com.hxb.oldBook.mapper;
 
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.ApplyForBusiness;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -15,10 +16,17 @@ public interface ApplyForBusinessMapper extends Mapper<ApplyForBusiness> {
     ApplyForBusiness queryByUserId(@Param("userId") Integer userId);
 
     /**
-     * 分页查询
-     * @param num 从第几条记录开始查询
-     * @param pageSize 查询多少条记录
+     * 根据表格参数得到对应记录
+     * 得到未审批的记录 status = 0
+     * @param tableParams 表格参数对象
+     * @return 返回满足条件的数据集合
+     */
+    List<ApplyForBusiness> queryByPage(TableParams tableParams);
+
+    /**
+     * 根据记录是否可被查询得到相应记录总和
+     * @param isActive
      * @return
      */
-    List<ApplyForBusiness> queryByPage(@Param("num") Integer num, @Param("pageSize") Integer pageSize);
+    Integer getCountByIsActive(Integer isActive);
 }

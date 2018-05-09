@@ -24,11 +24,20 @@ public class AdminController {
 
 
     /**
-     * 进入申请处理页面 申请请求列表封装到Model中
+     * 进入申请处理页面
      * @return
      */
     @RequestMapping("/toDealApply")
     public String toDearApply(){
         return "admin/dealApply";
+    }
+
+    /**
+     * 进入用户列表页面
+     * @return
+     */
+    @RequestMapping("/toUserList")
+    public String toUserList(){
+        return "admin/userList";
     }
 }

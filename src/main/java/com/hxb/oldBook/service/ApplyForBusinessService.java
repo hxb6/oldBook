@@ -1,6 +1,7 @@
 package com.hxb.oldBook.service;
 
 import com.hxb.oldBook.common.Result;
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.ApplyForBusiness;
 
 import java.util.List;
@@ -29,12 +30,12 @@ public interface ApplyForBusinessService extends BaseService<ApplyForBusiness> {
     Result queryByUserId(Integer userId);
 
     /**
-     * 分页查询数据
-     * @param offset  从第几条记录开始查询
-     * @param limit 每页的记录数
-     * @return
+     * 根据表格参数得到对应记录
+     * 得到未审批的记录 status = 0
+     * @param tableParams 表格参数对象
+     * @return 返回满足条件的数据集合
      */
-    List<ApplyForBusiness> queryByPage(Integer offset,Integer limit);
+    List<ApplyForBusiness> queryByPage(TableParams tableParams);
 
     /**
      * 管理员处理审批消息和更新用户信息
@@ -49,4 +50,11 @@ public interface ApplyForBusinessService extends BaseService<ApplyForBusiness> {
      * @return
      */
     int updateNotActive(ApplyForBusiness applyForBusiness);
+
+    /**
+     * 根据记录是否可悲查询得到相应记录总和
+     * @param isActive
+     * @return
+     */
+    Integer getCountByIsActive(Integer isActive);
 }

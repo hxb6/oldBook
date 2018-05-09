@@ -6,8 +6,15 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="book_type_name" jdbcType="VARCHAR" property="bookTypeName" />
+    <result column="book_type_introduce" jdbcType="VARCHAR" property="bookTypeIntroduce" />
     <result column="book_type_create_time" jdbcType="TIMESTAMP" property="bookTypeCreateTime" />
     <result column="book_type_modified_time" jdbcType="TIMESTAMP" property="bookTypeModifiedTime" />
   </resultMap>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT *
+    FROM book_variety
+    ORDER BY book_type_create_time DESC
+  </select>
 </mapper>

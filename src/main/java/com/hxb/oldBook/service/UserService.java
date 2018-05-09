@@ -1,8 +1,11 @@
 package com.hxb.oldBook.service;
 
 import com.hxb.oldBook.common.Result;
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.User;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @Package: com.hxb.oldBook.service
@@ -59,4 +62,18 @@ public interface UserService extends BaseService<User> {
      * @return Result结果集
      */
     Result resetPassword(String encryptedQuestion);
+
+    /**
+     * 重置密码成123456 管理员调用
+     * @param id 用户id
+     * @return Result结果集
+     */
+    Result adminResetUserPassword(Integer id);
+
+    /**
+     * 根据TableParams得到对应用户数据
+     * @param tableParams
+     * @return
+     */
+    List<User> getUserByTableParams(TableParams tableParams);
 }

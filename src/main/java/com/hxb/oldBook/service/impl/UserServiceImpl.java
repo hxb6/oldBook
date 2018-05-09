@@ -2,6 +2,7 @@ package com.hxb.oldBook.service.impl;
 
 import com.hxb.oldBook.common.Result;
 import com.hxb.oldBook.common.ResultEnum;
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.exception.CustomException;
 import com.hxb.oldBook.mapper.UserMapper;
 import com.hxb.oldBook.pojo.User;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Package: com.hxb.oldBook.service.impl
@@ -206,7 +208,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         //普通用户 需要校验密保 管理员则不需要
         if (roleType == 1) {
             if (encryptedQuestion != null && encryptedQuestion.equals(user.getEncryptedQuestion())) {
+                //重置密码
                 user.setPassword(MD5Util.getPassword(PASSWORD + user.getSalt()));
+                //最近修改时间
+                user.setUserModifiedTime(new Date());
                 userMapper.updateByPrimaryKeySelective(user);
                 return ResultUtil.success(ResultEnum.SUCCESS);
             } else {
@@ -217,5 +222,34 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             userMapper.updateByPrimaryKeySelective(user);
             return ResultUtil.success(ResultEnum.SUCCESS);
         }
+    }
+
+    /**
+     * 重置密码成123456 管理员调用
+     *
+     * @param id 用户id
+     * @return Result结果集
+     */
+    @Override
+    public Result adminResetUserPassword(Integer id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        //重置密码
+        user.setPassword(MD5Util.getPassword(PASSWORD + user.getSalt()));
+        //最近修改时间
+        user.setUserModifiedTime(new Date());
+        userMapper.updateByPrimaryKeySelective(user);
+        return ResultUtil.success(ResultEnum.SUCCESS);
+    }
+
+
+    /**
+     * 根据TableParams得到对应用户数据
+     *
+     * @param tableParams
+     * @return
+     */
+    @Override
+    public List<User> getUserByTableParams(TableParams tableParams) {
+        return userMapper.getUserByTableParams(tableParams);
     }
 }

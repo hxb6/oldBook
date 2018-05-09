@@ -17,7 +17,7 @@
     <script th:src="@{/bootstrap-table/src/locale/bootstrap-table-zh-CN.js}"></script>
     <script th:src="@{/chosen/chosen.jquery.min.js}"></script>
     <script th:src="@{/js/norm.js}"></script>
-    <script th:src="@{/myJs/admin.js}"></script>
+    <script th:src="@{/myJs/userList.js}"></script>
 </head>
 
 <body>
@@ -29,13 +29,10 @@
     <!-- 内容-->
     <div class="content">
         <div class="content_head">
-            <span>书籍分类管理</span>
+            <span>用户信息维护</span>
         </div>
-        <!-- 内容-->
-        <!-- 书籍种类管理 -->
+        <!--用户信息列表-->
         <div class="table-overflow form-group informGoods">
-            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addModal">添加书籍分类</button>
-
             <table class="table media-table" id="table">
                 <thead>
                 <tr>
@@ -43,11 +40,13 @@
                 </thead>
             </table>
         </div>
+        <!-- 内容-->
     </div>
 </div>
 
-<!-- 修改书籍分类模态框(Modal) -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<!-- 改变用户状态Modal框 -->
+<div class="modal fade" id="validModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,27 +54,18 @@
                     &times;
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    修改书籍分类信息
+                    账号状态改变
                 </h4>
             </div>
             <div class="modal-body">
-                <!-- 下面div保存用户点击的一条申请信息中的id -->
-                <div style="display: none">
-                    <input type="hidden" id="bookTypeId"/>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon">分类名称</span>
-                    <input style="text-align: center;" class="form-control" id="bookTypeName"/>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <span class="input-group-addon">分类简介</span>
-                    <input style="text-align: center;" class="form-control" id="bookTypeIntroduce"/>
-                </div>
-                <br/>
+                <h4 id="isValid"></h4>
+            </div>
+            <!-- 保存账号状态 -->
+            <div style="display: none">
+                <input type="hidden" id="valid"/>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="updateBookVariety()" class="btn btn-primary">
+                <button type="button" onclick="adminUpdateUser()" class="btn btn-primary">
                     提交更改
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -83,35 +73,28 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+    <!-- 保存用户id -->
+    <input type="hidden" id="userId"/>
 </div>
-
-<!-- 添加书籍分类模态框(Modal) -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+<!-- 重置密码Modal框 -->
+<div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title" id="addModalLabel">
-                    添加书籍分类信息
+                <h4 class="modal-title">
+                    重置用户密码
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="input-group">
-                    <span class="input-group-addon">分类名称</span>
-                    <input style="text-align: center;" class="form-control" id="addBookTypeName"/>
-                </div>
-                <br/>
-                <div class="input-group">
-                    <span class="input-group-addon">分类简介</span>
-                    <input style="text-align: center;" class="form-control" id="addBookTypeIntroduce"/>
-                </div>
-                <br/>
+                <h4>请确定是否重置用户密码!</h4>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="addBookVariety()" class="btn btn-primary">
-                    添加分类
+                <button type="button" onclick="adminResetPassword()" class="btn btn-primary">
+                    确定重置
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
@@ -120,15 +103,16 @@
     </div><!-- /.modal -->
 </div>
 </body>
+<!--申请处理维护-->
 <script>
     /**
      * 当前页面导航栏颜色变深
      */
-    $("#bookType").addClass("activea");
+    $("#userList").addClass("activea");
+
     /**
      * 初始化bootstrap table数据
      */
     initTable();
-
 </script>
 </html>
