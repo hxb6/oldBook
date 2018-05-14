@@ -1,6 +1,9 @@
 package com.hxb.oldBook.service;
 
+import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.BookInfo;
+
+import java.util.List;
 
 /**
  * @Package: com.hxb.oldBook.service
@@ -9,4 +12,11 @@ import com.hxb.oldBook.pojo.BookInfo;
  * @Description: 书籍信息接口
  **/
 public interface BookInfoService extends BaseService<BookInfo> {
+
+    /**
+     * 根据bootstrap table参数得到书籍列表
+     * @param tableParams
+     * @return
+     */
+    List<BookInfo> getBooksByTableParams(TableParams tableParams);
 }

@@ -35,16 +35,28 @@ public class BookInfo {
     private String bookIntroduction;
 
     /**
+     * 书籍图片保存路径
+     */
+    @Column(name = "img_url")
+    private String imgUrl;
+
+    /**
      * 所属书籍分类的id
      */
-    @Column(name = "book_varety_id")
-    private Integer bookVaretyId;
+    @Column(name = "book_variety_id")
+    private Integer bookVarietyId;
 
     /**
      * 所属用户的id
      */
     @Column(name = "user_id")
     private Integer userId;
+
+    /**
+     * 书籍状态 0-下架 1-上架
+     */
+    @Column(name = "book_status")
+    private Short bookStatus;
 
     /**
      * 书籍信息创建时间
@@ -145,21 +157,39 @@ public class BookInfo {
     }
 
     /**
+     * 获取书籍图片保存路径
+     *
+     * @return img_url - 书籍图片保存路径
+     */
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    /**
+     * 设置书籍图片保存路径
+     *
+     * @param imgUrl 书籍图片保存路径
+     */
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    }
+
+    /**
      * 获取所属书籍分类的id
      *
-     * @return book_varety_id - 所属书籍分类的id
+     * @return book_variety_id - 所属书籍分类的id
      */
-    public Integer getBookVaretyId() {
-        return bookVaretyId;
+    public Integer getBookVarietyId() {
+        return bookVarietyId;
     }
 
     /**
      * 设置所属书籍分类的id
      *
-     * @param bookVaretyId 所属书籍分类的id
+     * @param bookVarietyId 所属书籍分类的id
      */
-    public void setBookVaretyId(Integer bookVaretyId) {
-        this.bookVaretyId = bookVaretyId;
+    public void setBookVarietyId(Integer bookVarietyId) {
+        this.bookVarietyId = bookVarietyId;
     }
 
     /**
@@ -178,6 +208,24 @@ public class BookInfo {
      */
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    /**
+     * 获取书籍状态 0-下架 1-上架
+     *
+     * @return book_status - 书籍状态 0-下架 1-上架
+     */
+    public Short getBookStatus() {
+        return bookStatus;
+    }
+
+    /**
+     * 设置书籍状态 0-下架 1-上架
+     *
+     * @param bookStatus 书籍状态 0-下架 1-上架
+     */
+    public void setBookStatus(Short bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     /**

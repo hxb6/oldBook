@@ -10,9 +10,26 @@
     <result column="book_price" jdbcType="DECIMAL" property="bookPrice" />
     <result column="book_save" jdbcType="SMALLINT" property="bookSave" />
     <result column="book_introduction" jdbcType="VARCHAR" property="bookIntroduction" />
-    <result column="book_varety_id" jdbcType="INTEGER" property="bookVaretyId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="book_variety_id" jdbcType="INTEGER" property="bookVarietyId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_status" jdbcType="SMALLINT" property="bookStatus" />
     <result column="book_create_time" jdbcType="TIMESTAMP" property="bookCreateTime" />
     <result column="book_modified-time" jdbcType="TIMESTAMP" property="bookModifiedTime" />
   </resultMap>
+
+  <select id="getBooksByTableParams" parameterType="com.hxb.oldBook.common.TableParams" resultMap="BaseResultMap">
+    SELECT *
+    FROM book_info
+    ORDER BY
+    <choose>
+      <when test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">
+        ${sortName} ${sortOrder}
+      </when>
+      <otherwise>
+        book_status DESC
+      </otherwise>
+    </choose>
+    LIMIT #{offset},#{limit}
+  </select>
 </mapper>
