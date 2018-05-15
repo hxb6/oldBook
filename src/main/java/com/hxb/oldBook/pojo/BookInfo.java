@@ -1,9 +1,12 @@
 package com.hxb.oldBook.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "book_info")
 public class BookInfo {
     @Id
@@ -61,13 +64,15 @@ public class BookInfo {
     /**
      * 书籍信息创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "book_create_time")
     private Date bookCreateTime;
 
     /**
      * 书籍信息最近修改时间
      */
-    @Column(name = "book_modified-time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @Column(name = "book_modified_time")
     private Date bookModifiedTime;
 
     /**
@@ -249,7 +254,7 @@ public class BookInfo {
     /**
      * 获取书籍信息最近修改时间
      *
-     * @return book_modified-time - 书籍信息最近修改时间
+     * @return book_modified_time - 书籍信息最近修改时间
      */
     public Date getBookModifiedTime() {
         return bookModifiedTime;

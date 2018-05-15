@@ -89,7 +89,7 @@ function initTable() {
                     if (row.id == 1) {
                         html1 = "默认分类";
                     } else {
-                        html1 = '<a title="审批" onclick="showBookType(' + id + ')"><span class="glyphicon glyphicon-edit" ></span></a>';
+                        html1 = '<a style="cursor: pointer" title="审批" onclick="showBookType(' + id + ')"><span class="glyphicon glyphicon-edit" ></span></a>';
                     }
                     return html1;
                 }

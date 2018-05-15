@@ -113,11 +113,11 @@ function initTable() {
                     var id = row.id;
                     var html1;
                     if (row.isValid) {
-                        html1 = '<a onclick="changeIsValid(' + id + ',0)"  title="冻结账号"><span class="glyphicon glyphicon-minus-sign" ></span></a>';
+                        html1 = '<a style="cursor: pointer" onclick="changeIsValid(' + id + ',0)"  title="冻结账号"><span class="glyphicon glyphicon-minus-sign" ></span></a>';
                     } else {
-                        html1 = '<a onclick="changeIsValid(' + id + ',1)" title="解封账号"><span class="glyphicon glyphicon-ok-sign" ></span></a>';
+                        html1 = '<a style="cursor: pointer" onclick="changeIsValid(' + id + ',1)" title="解封账号"><span class="glyphicon glyphicon-ok-sign" ></span></a>';
                     }
-                    var html3 = '<a onclick="resetPassword(' + id + ')" title="重置密码"><span class="glyphicon glyphicon-cog" ></span></a>';
+                    var html3 = '<a style="cursor: pointer" onclick="resetPassword(' + id + ')" title="重置密码"><span class="glyphicon glyphicon-cog" ></span></a>';
                     return html1 + "&nbsp;&nbsp;&nbsp;" + html3;
                 }
             }

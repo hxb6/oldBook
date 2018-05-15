@@ -6,9 +6,9 @@ import com.hxb.oldBook.utils.StringUtil;
  * @Package: com.hxb.oldBook.common
  * @Author: HeXiaoBo
  * @CreateDate: 2018/5/9 15:39
- * @Description: bootstrap table表格传递的参数 包含分页信息 排序信息
+ * @Description: bootstrap table表格传递的参数 包含分页信息 排序信息 以及字段相等与某个信息
  **/
-public class TableParams {
+public class TableParams<T> {
 
     /**
      * 从第几条数据开始查询
@@ -29,6 +29,11 @@ public class TableParams {
      * 排序方式
      */
     private String sortOrder;
+
+    /**
+     * 数据查询时 sql语句中确定的某个字段要用来作为一定条件的判断，将其等于该参数参数  利用泛型匹配所有类型
+     */
+    private T target;
 
     public Integer getOffset() {
         return offset;
@@ -62,6 +67,13 @@ public class TableParams {
         this.sortOrder = sortOrder;
     }
 
+    public T getTarget() {
+        return target;
+    }
+
+    public void setTarget(T target) {
+        this.target = target;
+    }
 
     @Override
     public String toString() {
@@ -70,6 +82,7 @@ public class TableParams {
                 ", limit=" + limit +
                 ", sortName='" + sortName + '\'' +
                 ", sortOrder='" + sortOrder + '\'' +
+                ", target=" + target +
                 '}';
     }
 }

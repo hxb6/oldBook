@@ -147,7 +147,7 @@ function initTable(){
                     var userId = row.userId;
                     var applyReason = row.applyReason;
                     var applyId = row.id;
-                    var html1 = '<a title="审批" onclick="viewAndApply(' + applyId + ',' + userId + ',' + "'" + applyReason + "'" + ')"><span class="glyphicon glyphicon-edit" ></span></a>';
+                    var html1 = '<a style="cursor: pointer" title="审批" onclick="viewAndApply(' + applyId + ',' + userId + ',' + "'" + applyReason + "'" + ')"><span class="glyphicon glyphicon-edit" ></span></a>';
                     return html1;
                 }
             },

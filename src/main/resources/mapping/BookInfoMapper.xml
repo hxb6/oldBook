@@ -15,21 +15,43 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="book_status" jdbcType="SMALLINT" property="bookStatus" />
     <result column="book_create_time" jdbcType="TIMESTAMP" property="bookCreateTime" />
-    <result column="book_modified-time" jdbcType="TIMESTAMP" property="bookModifiedTime" />
+    <result column="book_modified_time" jdbcType="TIMESTAMP" property="bookModifiedTime" />
   </resultMap>
 
-  <select id="getBooksByTableParams" parameterType="com.hxb.oldBook.common.TableParams" resultMap="BaseResultMap">
-    SELECT *
-    FROM book_info
-    ORDER BY
-    <choose>
-      <when test="sortName != null and sortName != '' and sortOrder != null and sortOrder != ''">
-        ${sortName} ${sortOrder}
-      </when>
-      <otherwise>
-        book_status DESC
-      </otherwise>
-    </choose>
-    LIMIT #{offset},#{limit}
-  </select>
+    <!-- 查询书籍列表 管理员查询全部 用户查询自己没有删除(假性删除 状态为2)的书籍 -->
+    <select id="getBooksByTableParams" parameterType="com.hxb.oldBook.common.TableParams" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_info
+        <choose>
+            <when test="roleType = 1">
+                WHERE user_id = #{userId}
+                AND book_status != 2
+                <if test="tableParams.target != 0">
+                    AND book_variety_id = #{tableParams.target}
+                </if>
+            </when>
+            <otherwise>
+                <if test="tableParams.target != 0">
+                    WHERE book_variety_id = #{tableParams.target}
+                </if>
+            </otherwise>
+        </choose>
+        ORDER BY
+        <choose>
+            <when test="tableParams.sortName != null and tableParams.sortName != '' and tableParams.sortOrder != null and tableParams.sortOrder != ''">
+                ${tableParams.sortName} ${tableParams.sortOrder}
+            </when>
+            <otherwise>
+                book_status DESC
+            </otherwise>
+        </choose>
+        LIMIT #{tableParams.offset},#{tableParams.limit}
+    </select>
+
+    <!-- 设置书籍上架与下架和假性删除 -->
+    <update id="setBookOut" parameterType="integer">
+        UPDATE book_info
+        SET book_status = #{bookStatus},book_modified_time = NOW()
+        WHERE id = #{id}
+    </update>
 </mapper>

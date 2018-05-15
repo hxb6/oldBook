@@ -14,152 +14,73 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script th:src="@{/js/jquery-3.1.1.js}"></script>
-    <!-- webUploader css与js -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webuploader/css/webuploader.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/webuploader/css/style.css}"/>
-    <script type="text/javascript" th:src="@{/webuploader/js/webuploader.js}"></script>
-    <script type="text/javascript" th:src="@{/webuploader/js/upload.js}"></script>
     <!--bootstrap的js-->
     <script th:src="@{/js/bootstrap.js}"></script>
     <script th:src="@{/bootstrap-table/src/bootstrap-table.js}"></script>
     <script th:src="@{/bootstrap-table/src/locale/bootstrap-table-zh-CN.js}"></script>
+    <!-- 我是商家公共js -->
+    <script th:src="@{/myJs/shopCommon.js}"></script>
 </head>
 <body>
 <!-- 公共头部 -->
 <div th:replace="fragment/header :: header"></div>
 <div class="container" style="margin-top: 20px">
+    <!-- 个人中心公共标签式导航栏 -->
+    <ul th:replace="fragment/shopSidebar :: shopSidebar"></ul>
 
-
-    <!-- 个人中心公共导航栏 -->
-    <div th:replace="fragment/shopSidebar :: shopSidebar"></div>
-
-
-    <div class="Content pull-right">
-        <p class="Content-p">售卖书籍管理</p>
-        <div class="ContentDiv">
-            <!--用户信息列表-->
-            <div class="table-overflow form-group informGoods">
-                <table id="table" class="table media-table">
-                    <thead>
-                    <tr>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <!--头部，相册选择和格式选择-->
-            <div id="uploader" style="display: none">
-                <div class="queueList">
-                    <div id="dndArea">
-                        <div id="imagePicker"></div>
-                    </div>
+    <!-- 内容显示区 -->
+    <div class="content">
+        <!--书籍管理div-->
+        <div class="table-overflow form-group informGoods">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <select class="form-control" id="target" onchange="refreshTable()">
+                    </select>
                 </div>
-                <!-- 下面div为提示信息 可显示图片大小以上传失败后的提示信息 -->
-                <!--<div class="info"></div>-->
-                <div id="filePicker2"></div>
-                <button id="uploadBtn" class="btn btn-primary">添加</button>
             </div>
+            <table id="table" class="table media-table">
+                <thead>
+                <tr>
+                </tr>
+                </thead>
+            </table>
         </div>
+
+    </div>
+
+    <!-- 改变书籍状态模态框(上架,下架以及删除)Modal -->
+    <div class="modal fade" id="setBookStatusModal" tabindex="-1" role="dialog" aria-labelledby="setBookStatusLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="setBookStatusLabel"></h4>
+                </div>
+                <!-- 保存点击书籍的id -->
+                <input type="hidden" id="bookId"/>
+                <!-- 保存点击书籍的更改的状态 -->
+                <input type="hidden" id="bookStatus"/>
+                <div class="modal-body" id="statusInfo"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="submitChangeBookStatus()">提交更改</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
 </div>
 </body>
 <script>
-    /**
-     * bootstrap table样式定义
-     */
-    var tableOrder = {
-        url: "/book/getBooksByTableParams",         //请求后台的URL（*）
-        method: "get",                      //请求方式（*）
-        toolbar: "#toolbar",                //工具按钮用哪个容器
-        undefinedText: "暂无简介",            //当数据为 undefined 时显示的字符
-        striped: true,                      //是否显示行间隔色
-        cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-        pagination: true,                   //是否显示分页（*）
-        sidePagination: "server",           //分页方式 client客户端分页 server服务端分页
-        sortable: true,                     //是否启用排序
-        sortName: "bookStatus",                 //默认排序字段
-        sortOrder: "desc",                   //默认排序方式
-        pageNumber: 1,                       //初始化加载第一页，默认第一页
-        pageSize: 10,                       //每页的记录条数（*）
-        pageList: [10, 15, 20, 50],        //可供选择的每页的行数（*）
-        strictSearch: true,
-        showColumns: true,                  //是否显示所有的列
-        showRefresh: true,                  //是否显示刷新按钮
-        minimumCountColumns: 2,             //最少允许的列数
-        clickToSelect: true,                //是否启用点击选中行
-        height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-        showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
-        cardView: false,                    //是否显示详细视图
-        detailView: false,                   //是否显示父子表
-        paginationPreText: "上一页",
-        paginationNextText: "下一页",
-        formatNoMatches: function () {
-            return "暂无书籍...";
-        },
-        queryParams: function (params) {    //查询参数
-            var temp = {
-                offset: params.offset,
-                limit: params.limit,
-                sortName: this.sortName,
-                sortOrder: this.sortOrder
-            };
-            return temp;
-        },
-        columns: [
-            {
-                title: "序号",
-                align: "center",
-                formatter: function (value, row, index) {
-                    return index + 1;
-                },
-            },
-            {
-                title: "书籍名称",
-                align: "center",
-                field: "bookName",
-                sortable: true
-            },
-            {
-                title: "书籍分类",
-                align: "center",
-                field: "bookVarietyId",
-                sortable: true
 
-            },
-            {
-                title: "书籍价格",
-                align: "center",
-                field: "bookPrice",
-                sortable: true
-            },
-            {
-                title: "书籍存货",
-                align: "center",
-                field: "bookSave",
-                sortable: true
-            },
-            {
-                title: "添加时间",
-                align: "center",
-                field: "bookCreateTime",
-                sortable: true
-            },
-            {
-                title: "书籍状态",
-                align: "center",
-                field: "bookStatus",
-                formatter: function (value, row, index) {
-                    return row.bookStatus == 0 ? "未上架" : "已上架";
-                }
-            },
-            {
-                title: '操作',
-                align: "center",
-                formatter: function (value, row, index) {
-                }
-            }
-        ]
-    };
-    $("#table").bootstrapTable(tableOrder);
+    /**
+     * 导航栏颜色变白
+     */
+    $("#bookManager").addClass("active");
+
+    /**
+     * 初始化bootstrap table
+     */
+    bookManager();
 </script>
 </html>

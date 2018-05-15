@@ -16,4 +16,9 @@ public class MyShopInfoController {
     public String toShop(){
         return "myShop";
     }
+
+    @RequestMapping("/bookAdd")
+    public String toBookAdd(){
+        return "bookAdd";
+    }
 }

@@ -19,4 +19,11 @@ public interface BookInfoService extends BaseService<BookInfo> {
      * @return
      */
     List<BookInfo> getBooksByTableParams(TableParams tableParams);
+
+    /**
+     * 设置书籍状态
+     * @param id 书籍id
+     * @param bookStatus 书籍状态
+     */
+    void setBookStatus(Integer id,Integer bookStatus);
 }
