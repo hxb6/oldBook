@@ -198,18 +198,6 @@ function initImgDiv() {
         return !denied;
     });
 
-    /**
-     * 当一批文件添加进队列以后触发。
-     */
-    /*uploader.on('filesQueued', function() {
-        uploader.sort(function( a, b ) {
-            if ( a.name < b.name )
-              return -1;
-            if ( a.name > b.name )
-              return 1;
-            return 0;
-        });
-    });*/
 
 
     /**
@@ -388,141 +376,10 @@ function initImgDiv() {
         var $li = $('#' + file.id);
 
         delete percentages[file.id];
-        updateTotalProgress();
         $li.off().find('.file-panel').off().end().remove();
     }
 
-    /**
-     * 更新总的进度条(本项目没用)
-     */
-    function updateTotalProgress() {
-        var loaded = 0,
-            total = 0,
-            spans = $progress.children(),
-            percent;
 
-        $.each(percentages, function (k, v) {
-            total += v[0];
-            loaded += v[0] * v[1];
-        });
-
-        percent = total ? loaded / total : 0;
-
-
-        spans.eq(0).text(Math.round(percent * 100) + '%');
-        spans.eq(1).css('width', Math.round(percent * 100) + '%');
-        updateStatus();
-    }
-
-    /**
-     * 更新状态(本项目没用)
-     */
-    function updateStatus() {
-        var text = '', stats;
-
-        if (state === 'ready') {
-            text = '选中' + fileCount + '张图片，共' +
-                WebUploader.formatSize(fileSize) + '。';
-        } else if (state === 'confirm') {
-            stats = uploader.getStats();
-            if (stats.uploadFailNum) {
-                text = '已成功上传' + stats.successNum + '张照片至XX相册，' +
-                    stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
-            }
-
-        } else {
-            stats = uploader.getStats();
-            text = '共' + fileCount + '张（' +
-                WebUploader.formatSize(fileSize) +
-                '），已上传' + stats.successNum + '张';
-
-            if (stats.uploadFailNum) {
-                text += '，失败' + stats.uploadFailNum + '张';
-            }
-        }
-
-    }
-
-    /**
-     * 设置状态(本项目没用)
-     */
-    function setState(val) {
-        var file, stats;
-
-        if (val === state) {
-            return;
-        }
-
-        $upload.removeClass('state-' + state);
-        $upload.addClass('state-' + val);
-        state = val;
-
-        switch (state) {
-            case 'pedding':
-                $placeHolder.removeClass('element-invisible');
-                $queue.hide();
-                $statusBar.addClass('element-invisible');
-                uploader.refresh();
-                break;
-
-            case 'ready':
-                $placeHolder.addClass('element-invisible');
-                $('#filePicker2').removeClass('element-invisible');
-                $queue.show();
-                $statusBar.removeClass('element-invisible');
-                uploader.refresh();
-                break;
-
-            case 'uploading':
-                $('#filePicker2').addClass('element-invisible');
-                $progress.show();
-                $upload.text('暂停上传');
-                break;
-
-            case 'paused':
-                $progress.show();
-                $upload.text('继续上传');
-                break;
-
-            case 'confirm':
-                $progress.hide();
-                $('#filePicker2').removeClass('element-invisible');
-                $upload.text('添加');
-
-                stats = uploader.getStats();
-                if (stats.successNum && !stats.uploadFailNum) {
-                    setState('finish');
-                    return;
-                }
-                break;
-            case 'finish':
-                stats = uploader.getStats();
-                if (stats.successNum) {
-                    //成功后的提示
-                } else {
-                    // 没有成功的图片，重设
-                    state = 'done';
-                    location.reload();
-                }
-                break;
-        }
-
-        updateStatus();
-    }
-
-    /**
-     * 上传过程中触发，携带上传进度。(本项目没用)
-     * @param file 图片
-     * @param percentage 该图片上传进度
-     */
-    uploader.onUploadProgress = function (file, percentage) {
-        var $li = $('#' + file.id),
-            $percent = $li.find('.progress span');
-
-        $percent.css('width', percentage * 100 + '%');
-        percentages[file.id][1] = percentage;
-        updateTotalProgress();
-    };
     /**
      * 当文件被加入队列以后触发。
      * @param file 选择的图片文件
@@ -537,8 +394,6 @@ function initImgDiv() {
         }
 
         addFile(file);
-        setState('ready');
-        updateTotalProgress();
     };
     /**
      * 当文件被移除队列后触发。
@@ -548,32 +403,9 @@ function initImgDiv() {
         fileCount--;
         fileSize -= file.size;
 
-        if (!fileCount) {
-            setState('pedding');
-        }
-
         removeFile(file);
-        updateTotalProgress();
 
     };
-
-    uploader.on('all', function (type) {
-        var stats;
-        switch (type) {
-            case 'uploadFinished':
-                setState('confirm');
-                break;
-
-            case 'startUpload':
-                setState('uploading');
-                break;
-
-            case 'stopUpload':
-                setState('paused');
-                break;
-
-        }
-    });
 
     /**
      * 选择图片发生错误触发事件 弹出提示框
@@ -608,6 +440,10 @@ function initImgDiv() {
      * 图片上传
      */
     $uploadBtn.on('click', function () {
+        if(fileCount == 0){
+            alert("必须选择书籍图片");
+            return false;
+        }
         uploader.option('formData', {
             bookName: $("#bookName").val(),
             bookSave: $("#bookSave").val(),
@@ -618,7 +454,19 @@ function initImgDiv() {
         uploader.upload();
     });
 
-    $upload.addClass('state-' + state);
-    updateTotalProgress();
+    /**
+     * 上传完成后调用
+     */
+    uploader.onUploadComplete = function () {
+        $("#myModal").modal("show");
+    }
+
+    /**
+     * 上传开始前调用
+     */
+    uploader.onUploadStart = function () {
+
+    }
+
 }
 

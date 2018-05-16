@@ -81,4 +81,11 @@ public class AdminUserController {
         userService.updateByPrimaryKeySelective(user);
         return ResultUtil.success(ResultEnum.SUCCESS);
     }
+
+    @GetMapping("/getUserList")
+    @ResponseBody
+    public Result getUserList(){
+        List<User> lists = userService.getUserList();
+        return ResultUtil.success(ResultEnum.SUCCESS, lists);
+    }
 }

@@ -2,7 +2,9 @@ package com.hxb.oldBook.service;
 
 import com.hxb.oldBook.common.TableParams;
 import com.hxb.oldBook.pojo.BookInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,4 +28,20 @@ public interface BookInfoService extends BaseService<BookInfo> {
      * @param bookStatus 书籍状态
      */
     void setBookStatus(Integer id,Integer bookStatus);
+
+    /**
+     * 添加新的书籍
+     * @param imgFile 书籍图片
+     * @param bookInfo Controller层封装的bookinfo对象
+     */
+    void addNewBook(MultipartFile imgFile,BookInfo bookInfo) throws IOException;
+
+
+
+    /**
+     * 根据传递参数得到数据总和
+     * @param tableParams
+     * @return
+     */
+    int getCountByTableParams(TableParams tableParams);
 }

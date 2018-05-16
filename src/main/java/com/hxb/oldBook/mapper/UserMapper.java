@@ -22,4 +22,10 @@ public interface UserMapper extends Mapper<User> {
      * @return
      */
     List<User> getUserByTableParams(TableParams tableParams);
+
+    /**
+     * 得到用户对象 名字升序排序
+     * @return
+     */
+    List<User> getUserList();
 }

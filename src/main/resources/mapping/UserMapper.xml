@@ -38,4 +38,11 @@
         </choose>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="getUserList" resultMap="BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE role_type = 1
+        ORDER BY user_name ASC
+    </select>
 </mapper>

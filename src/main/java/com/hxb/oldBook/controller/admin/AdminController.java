@@ -22,6 +22,11 @@ public class AdminController {
         return "admin/admin";
     }
 
+    @RequestMapping("/toBookList")
+    public String toBookList(){
+        return "admin/bookList";
+    }
+
 
     /**
      * 进入申请处理页面

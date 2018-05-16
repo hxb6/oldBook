@@ -41,11 +41,14 @@ function bookManager() {
                 /*
                     遍历json数组中的rows 设置map数据
                  */
-                //清空下拉框
+                //清空下拉框 填充页面书籍下拉框
                 $("#target").empty();
                 $("#target").append("<option selected='selected' value='" + 0 + "'>按书籍分类查询</option>");
+                //清空下拉框 填充修改书籍Modal框中书籍种类
+                $("#bookVarietyId").empty();
                 for (var rowsKey in object.rows) {
                     $("#target").append("<option  value='" + object.rows[rowsKey].id + "'>" + object.rows[rowsKey].bookTypeName + "</option>");
+                    $("#bookVarietyId").append("<option  value='" + object.rows[rowsKey].id + "'>" + object.rows[rowsKey].bookTypeName + "</option>");
                     map.set(object.rows[rowsKey].id, object.rows[rowsKey].bookTypeName)
                 }
             }
@@ -70,11 +73,11 @@ function bookManager() {
             pagination: true,                   //是否显示分页（*）
             sidePagination: "server",           //分页方式 client客户端分页 server服务端分页
             sortable: true,                     //是否启用排序
-            sortName: "bookStatus",                 //默认排序字段
+            sortName: "bookCreateTime",                 //默认排序字段
             sortOrder: "desc",                   //默认排序方式
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录条数（*）
-            pageList: [10, 15, 20, 50],        //可供选择的每页的行数（*）
+            pageSize: 4,                       //每页的记录条数（*）
+            pageList: [4, 10, 20, 50],        //可供选择的每页的行数（*）
             strictSearch: true,
             showColumns: true,                  //是否显示所有的列
             showRefresh: true,                  //是否显示刷新按钮
@@ -111,9 +114,9 @@ function bookManager() {
                 {
                     title: "书籍图片",
                     align: "center",
-                    field: "",
                     formatter: function (value, row, index) {
-                        return '<img/>';
+                        var url = "/" + row.imgUrl;
+                        return '<img style="width: 74px;height: 74px" src="' + url + '">';
                     }
                 },
                 {
@@ -155,6 +158,7 @@ function bookManager() {
                     title: "书籍状态",
                     align: "center",
                     field: "bookStatus",
+                    sortable: true,
                     formatter: function (value, row, index) {
                         return row.bookStatus == 0 ? "未上架" : "已上架";
                     }
@@ -165,7 +169,7 @@ function bookManager() {
                     formatter: function (value, row, index) {
                         var id = row.id;
                         var bookStatus = row.bookStatus;
-                        var html1 = '<a style="cursor: pointer" title="修改"><span class="glyphicon glyphicon-edit" ></span></a>';
+                        var html1 = '<a onclick="getBookById(' + id + ')" style="cursor: pointer" title="修改"><span class="glyphicon glyphicon-edit" ></span></a>';
                         var html2;
                         if (bookStatus == 0) {
                             html2 = '<a style="cursor: pointer" onclick="setBookStatus(' + id + ',' + 1 + ')" title="上架"><span class="glyphicon glyphicon-circle-arrow-up" ></span></a>';
@@ -181,12 +185,14 @@ function bookManager() {
         $("#table").bootstrapTable(tableOrder);
     }
 
+
+
 }
 
 /**
  * 用户按书籍分类chaxun
  */
-function refreshTable(){
+function refreshTable() {
     $("#table").bootstrapTable("refresh");
 }
 
@@ -233,9 +239,53 @@ function submitChangeBookStatus() {
     });
 }
 
+/**
+ * 根据书籍id得到书籍信息
+ * @param bookId
+ */
+function getBookById(bookId) {
+    //保存需要修改书籍的id
+    $("#updateBookId").val(bookId);
+    $.ajax({
+        url : "/book/getBookById",
+        data : {
+            "id" : bookId
+        },
+        success : function (object) {
+            $("#bookName").val(object.data.bookName);
+            $("#bookIntroduction").val(object.data.bookIntroduction);
+            $("#bookPrice").val(object.data.bookPrice);
+            $("#bookSave").val(object.data.bookSave);
+            $("#bookVarietyId").val(object.data.bookVarietyId);
+            $("#updateBookInfoModal").modal("show");
+        }
+    });
+}
+
+/**
+ * 提交修改
+ */
+function updateBookInfo() {
+    $.ajax({
+        url : "/book/updateBook",
+        type : "post",
+        contentType : "application/json",
+        data : JSON.stringify({
+            "id" : $("#updateBookId").val(),
+            "bookName" : $("#bookName").val(),
+            "bookPrice" : $("#bookPrice").val(),
+            "bookSave" : $("#bookSave").val(),
+            "bookIntroduction" : $("#bookIntroduction").val(),
+            "bookVarietyId" : $("#bookVarietyId").val()
+        }),
+        success : function () {
+            $("#table").bootstrapTable("refresh");
+            $("#updateBookInfoModal").modal("hide");
+        }
+    });
+}
+
 /*------------书籍管理div相关js--结束------------------------*/
-
-
 
 
 /*------------书籍添加div相关js--开始------------------------*/
@@ -273,4 +323,5 @@ function bookAdd() {
         });
     }
 }
+
 /*------------书籍添加div相关js--结束------------------------*/

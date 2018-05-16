@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ public class BookInfoController {
 
 
     /**
-     * 添加书籍记录 先保存
+     * 添加书籍记录 包括书籍图片和信息
      *
      * @param bookImg 图片文件
      * @return
@@ -41,17 +44,17 @@ public class BookInfoController {
     @PostMapping("/addNewBook")
     public String addNewBook(MultipartFile bookImg,
                              String bookName,
-                             String bookSave,
+                             Short bookSave,
                              String bookIntroduction,
-                             String bookPrice,
-                             String bookVarietyId) {
-        System.out.println(bookImg.getOriginalFilename());
-        System.out.println(bookImg.getSize());
-        System.out.println(bookName);
-        System.out.println(bookSave);
-        System.out.println(bookIntroduction);
-        System.out.println(bookPrice);
-        System.out.println(bookVarietyId);
+                             BigDecimal bookPrice,
+                             Integer bookVarietyId) throws IOException {
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setBookName(bookName);
+        bookInfo.setBookSave(bookSave);
+        bookInfo.setBookPrice(bookPrice);
+        bookInfo.setBookIntroduction(bookIntroduction);
+        bookInfo.setBookVarietyId(bookVarietyId);
+        bookInfoService.addNewBook(bookImg, bookInfo);
         return "bookAdd";
     }
 
@@ -65,7 +68,7 @@ public class BookInfoController {
     @ResponseBody
     public TablePageResult getBooksByTableParams(TableParams tableParams) {
         List<BookInfo> lists = bookInfoService.getBooksByTableParams(tableParams);
-        Integer total = bookInfoService.getCount(new BookInfo());
+        Integer total = bookInfoService.getCountByTableParams(tableParams);
         return TablePageResultUtil.success(total, lists);
     }
 
@@ -79,6 +82,33 @@ public class BookInfoController {
     @ResponseBody
     public Result setBookStatus(@RequestParam("id") Integer id, @RequestParam("bookStatus") Integer bookStatus) {
         bookInfoService.setBookStatus(id, bookStatus);
+        return ResultUtil.success(ResultEnum.SUCCESS);
+    }
+
+    /**
+     * 根据书籍id返回书籍信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/getBookById")
+    @ResponseBody
+    public Result getBookById(@RequestParam("id") Integer id){
+        BookInfo bookInfo = bookInfoService.selectByPrimaryKey(id);
+        return ResultUtil.success(ResultEnum.SUCCESS, bookInfo);
+    }
+
+
+    /**
+     * 更新书籍信息(不包括修改书籍图片信息)
+     * @param bookInfo
+     * @return
+     */
+    @PostMapping("/updateBook")
+    @ResponseBody
+    public Result updateBookInfo(@RequestBody BookInfo bookInfo){
+        //设置书籍最近更新时间
+        bookInfo.setBookModifiedTime(new Date());
+        bookInfoService.updateByPrimaryKeySelective(bookInfo);
         return ResultUtil.success(ResultEnum.SUCCESS);
     }
 }

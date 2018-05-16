@@ -252,4 +252,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public List<User> getUserByTableParams(TableParams tableParams) {
         return userMapper.getUserByTableParams(tableParams);
     }
+
+    /**
+     * 得到用户对象 名字升序排序
+     *
+     * @return
+     */
+    @Override
+    public List<User> getUserList() {
+        return userMapper.getUserList();
+    }
 }
