@@ -44,4 +44,23 @@ public interface BookInfoService extends BaseService<BookInfo> {
      * @return
      */
     int getCountByTableParams(TableParams tableParams);
+
+
+    /**
+     * 首页获取售卖的书籍 已上架的书籍并且该书籍所属的用户账号未被冻结
+     * @return
+     */
+    List<BookInfo> getSellBook();
+
+    /**
+     * 根据书籍类查询售卖的书籍
+     * @return
+     */
+    List<BookInfo> getSellBookByBookVariety(Integer bookVarietyId);
+
+    /**
+     * 根据书籍名称模糊查询售卖的书籍
+     * @return
+     */
+    List<BookInfo> getSellBookLikeBookName(String bookName);
 }

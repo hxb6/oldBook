@@ -1,6 +1,8 @@
 package com.hxb.oldBook.service.impl;
 
+import com.hxb.oldBook.common.ResultEnum;
 import com.hxb.oldBook.common.TableParams;
+import com.hxb.oldBook.exception.CustomException;
 import com.hxb.oldBook.mapper.BookInfoMapper;
 import com.hxb.oldBook.pojo.BookInfo;
 import com.hxb.oldBook.pojo.User;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -75,9 +78,9 @@ public class BookInfoServiceImpl extends BaseServiceImpl<BookInfo> implements Bo
         //利用系统时间 + 图片文件名称使图像文件名唯一 保存进数据库
         String imgUrl = new StringBuilder().append(String.valueOf(System.currentTimeMillis())).append(imgName).toString();
         //床架对象
-        File file = new File(uploadPath,imgUrl);
+        File file = new File(uploadPath, imgUrl);
         //上传图片
-        FileUtil.multipartFileUpload(imgFile,file);
+        FileUtil.multipartFileUpload(imgFile, file);
         //保存图片路径
         bookInfo.setImgUrl(imgUrl);
         //设置书籍添加时间和最近更新时间 这里两个时间相同
@@ -85,13 +88,12 @@ public class BookInfoServiceImpl extends BaseServiceImpl<BookInfo> implements Bo
         bookInfo.setBookCreateTime(date);
         bookInfo.setBookModifiedTime(date);
         //默认书籍未上架
-        bookInfo.setBookStatus((short)0);
+        bookInfo.setBookStatus((short) 0);
         User user = ((User) RequestUtil.getSession().getAttribute("user"));
         //绑定售卖书籍的用户
         bookInfo.setUserId(user.getId());
         bookInfoMapper.insertSelective(bookInfo);
     }
-
 
 
     /**
@@ -104,6 +106,55 @@ public class BookInfoServiceImpl extends BaseServiceImpl<BookInfo> implements Bo
     public int getCountByTableParams(TableParams tableParams) {
         //从session中得到登录用户
         User user = UserUtil.getUserFormSession();
-        return bookInfoMapper.getCountByUserId(tableParams,user);
+        return bookInfoMapper.getCountByUserId(tableParams, user);
+    }
+
+
+    /**
+     * 首页获取售卖的书籍 已上架的书籍并且该书籍所属的用户账号未被冻结
+     *
+     * @return
+     */
+    @Override
+    public List<BookInfo> getSellBook() {
+        List<BookInfo> lists = null;
+        lists = bookInfoMapper.getSellBook();
+        if (lists != null && lists.size() > 0) {
+            return lists;
+        } else {
+            throw new CustomException(ResultEnum.NULL_SELL_BOOK);
+        }
+    }
+
+    /**
+     * 根据书籍类查询售卖的书籍
+     *
+     * @return
+     */
+    @Override
+    public List<BookInfo> getSellBookByBookVariety(Integer bookVarietyId) {
+        List<BookInfo> lists = null;
+        lists = bookInfoMapper.getSellBookByBookVariety(bookVarietyId);
+        if (lists != null && lists.size() > 0) {
+            return lists;
+        } else {
+            throw new CustomException(ResultEnum.NULL_SELL_BOOK);
+        }
+    }
+
+    /**
+     * 根据书籍名称模糊查询售卖的书籍
+     *
+     * @return
+     */
+    @Override
+    public List<BookInfo> getSellBookLikeBookName(String bookName) {
+        List<BookInfo> lists = null;
+        lists = bookInfoMapper.getSellBookLikeBookName(bookName);
+        if (lists != null && lists.size() > 0) {
+            return lists;
+        } else {
+            throw new CustomException(ResultEnum.NULL_SELL_BOOK);
+        }
     }
 }

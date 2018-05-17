@@ -10,11 +10,13 @@ import com.hxb.oldBook.utils.ResultUtil;
 import com.hxb.oldBook.utils.TablePageResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class BookInfoController {
      */
     @Autowired
     private BookInfoService bookInfoService;
+
 
 
     /**
@@ -111,4 +114,59 @@ public class BookInfoController {
         bookInfoService.updateByPrimaryKeySelective(bookInfo);
         return ResultUtil.success(ResultEnum.SUCCESS);
     }
+
+
+    /**
+     * 查询售卖的书籍
+     * @return
+     */
+    @GetMapping("/getSellBook")
+    @ResponseBody
+    public Result getSellBook(){
+        List<BookInfo> lists = bookInfoService.getSellBook();
+        return ResultUtil.success(ResultEnum.SUCCESS, lists);
+    }
+
+    /**
+     * 根据书籍种类查询得到售卖书籍
+     * @param bookVarietyId 书籍种类id
+     * @return
+     */
+    @GetMapping("/getSellBookByBookVariety")
+    @ResponseBody
+    public Result getSellBookByBookVariety(@RequestParam("bookVarietyId") Integer bookVarietyId){
+        List<BookInfo> lists = bookInfoService.getSellBookByBookVariety(bookVarietyId);
+        return ResultUtil.success(ResultEnum.SUCCESS, lists);
+    }
+
+    /**
+     * 根据书籍名称模糊查询得到售卖书籍
+     * @param bookName 用户搜索框输入书籍名称
+     * @return
+     */
+    @GetMapping("/getSellBookLikeBookName")
+    @ResponseBody
+    public Result getSellBookLikeBookName(@RequestParam("bookName") String bookName){
+        List<BookInfo> lists = bookInfoService.getSellBookLikeBookName(bookName);
+        return ResultUtil.success(ResultEnum.SUCCESS, lists);
+    }
+
+
+    /**
+     * 根据书籍id得到书籍信息
+     * 跳转到书籍详情页面
+     * @param id
+     * @return
+     */
+    @RequestMapping("/toBookDetails")
+    public String toBookDetails(@RequestParam("id") Integer id, Model model){
+        BookInfo bookInfo = bookInfoService.selectByPrimaryKey(id);
+        bookInfo.setImgUrl("/" + bookInfo.getImgUrl());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateFormat = simpleDateFormat.format(bookInfo.getBookCreateTime());
+        model.addAttribute("createDate", dateFormat);
+        model.addAttribute("bookInfo", bookInfo);
+        return "bookDetails";
+    }
+
 }

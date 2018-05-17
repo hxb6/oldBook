@@ -18,6 +18,13 @@
         <result column="book_modified_time" jdbcType="TIMESTAMP" property="bookModifiedTime"/>
     </resultMap>
 
+    <!-- 设置书籍上架与下架和假性删除 -->
+    <update id="setBookOut" parameterType="integer">
+        UPDATE book_info
+        SET book_status = #{bookStatus},book_modified_time = NOW()
+        WHERE id = #{id}
+    </update>
+
     <!-- 查询书籍列表 管理员查询全部 用户查询自己没有删除(假性删除 状态为2)的书籍 -->
     <select id="getBooksByTableParams" resultMap="BaseResultMap">
         SELECT *
@@ -34,9 +41,9 @@
             </when>
             <!--管理员查询操作-->
             <otherwise>
-                    <if test="tableParams.target != 0">
-                        WHERE user_id = #{tableParams.target}
-                    </if>
+                <if test="tableParams.target != 0">
+                    WHERE user_id = #{tableParams.target}
+                </if>
             </otherwise>
         </choose>
         ORDER BY
@@ -67,18 +74,39 @@
                 </if>
             </when>
             <otherwise>
-                    <if test="tableParams.target != 0">
-                        WHERE user_id = #{tableParams.target}
-                    </if>
+                <if test="tableParams.target != 0">
+                    WHERE user_id = #{tableParams.target}
+                </if>
             </otherwise>
         </choose>
     </select>
+    <!-- 查询售卖的书籍并且书籍所属用户账号未被冻结 -->
+    <select id="getSellBook" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_info AS b JOIN user AS u
+        WHERE b.book_status = 1
+        AND b.user_id = u.id
+        AND u.is_valid = 1
+    </select>
 
+    <!-- 根据书籍类查询售卖的书籍 -->
+    <select id="getSellBookByBookVariety" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_info AS b JOIN user AS u
+        WHERE b.book_status = 1
+        AND b.user_id = u.id
+        AND u.is_valid = 1
+        AND b.book_variety_id = #{bookVarietyId}
+    </select>
 
-    <!-- 设置书籍上架与下架和假性删除 -->
-    <update id="setBookOut" parameterType="integer">
-        UPDATE book_info
-        SET book_status = #{bookStatus},book_modified_time = NOW()
-        WHERE id = #{id}
-    </update>
+    <!-- 根据书籍名称模糊查询售卖的书籍 -->
+    <select id="getSellBookLikeBookName" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_info AS b JOIN user AS u
+        WHERE b.book_status = 1
+        AND b.user_id = u.id
+        AND u.is_valid = 1
+        AND b.book_name LIKE '%${bookName}%'
+    </select>
+
 </mapper>

@@ -1,7 +1,7 @@
 package com.hxb.oldBook.service.impl;
 
-import com.hxb.oldBook.pojo.Order;
-import com.hxb.oldBook.service.OrderService;
+import com.hxb.oldBook.pojo.BookOrder;
+import com.hxb.oldBook.service.BookOrderService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  * @Description:
  **/
 @Service
-public class OrderServiceImpl extends BaseServiceImpl<Order> implements OrderService {
+public class BookOrderServiceImpl extends BaseServiceImpl<BookOrder> implements BookOrderService {
 }

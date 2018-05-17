@@ -102,23 +102,13 @@ body{background-color: #f6f6f6;}
 	height: 400px;
 }
 .top-left{
-	background-color:#666666;
-	width: 250px;
-	height: 350px;
+	width: 170px;
+	height: 250px;
 	float: left;
-	padding:15px 10px;
-}
-.top-left>p{
-	color: white;
-	margin: 10px 5px;
-}
-.top-left>p>a>span{
-	display: inline-block;
-	margin-right: 10px;
-	cursor: pointer;
+	margin-top: 15px;
 }
 .top-right{
-	width: 800px;
+	width: 880px;
 	float: right;
 }
 .content{
@@ -139,10 +129,15 @@ body{background-color: #f6f6f6;}
 	margin: 15px 15px 0px 15px;
 	background-color: white;
 }
+.price{
+	font-family: "Bookman Old Style";
+	font-weight: bold;/*加粗*/
+	color: red;
+}
 .GoodsItem>a>p{
-	padding-left: 20px;
 	font-size: 14px;
 	font-family: "宋体";
+	padding-left: 12px;
 }
 .GoodsItem>a>img{
 	width: 160px;
@@ -583,8 +578,7 @@ body{background-color: #f6f6f6;}
 .mouseImg2{
 	display: none;
 }
-.detailRightone{
-	margin-bottom: 5px;
+.bookIntru{
 	font-family: "宋体";
 	font-size: 18px;
 	font-weight: bold;
@@ -595,7 +589,6 @@ body{background-color: #f6f6f6;}
 .detailRightthr{
 	margin: 10px 0px;
 	padding: 10px 8px;
-	background-color: #eee;
 }
 .detailRightthr>span{
 	color:#c60023 ;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>首页</title>
+    <!--bootstrap的css-->
+    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <!--自定义css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+<!-- 头部 -->
+<div th:include="/fragment/header :: header"></div>
+<!--   ***************内容区***************   -->
+<div class="container" style="margin-top: 20px">
+    <!--面包屑-->
+    <div class="breadcrumb">
+        <li><a href="javascript:void(0)" onclick="window.location.href='/index'">首页></a><span class="divider"></span>
+        </li>
+        <li class="active">订单确认</li>
+    </div>
+
+    <div class="Ordersure">
+        <p class="Ordersure-p">商品清单</p>
+        <p class="Ordersure-span">
+            <span class="Ordersure-spana">商品描述</span>
+            <span class="Ordersure-spanb">价格</span>
+            <span class="Ordersure-spanb">数量</span>
+            <span class="Ordersure-spanb">小计</span></p>
+        <p class="Ordersure-spantwo">
+            <span class="Ordersure-spanc"><img
+                    th:src="${bookInfo.imgUrl}"><span th:text="${bookInfo.bookIntroduction}"></span></span>
+            <span class="Ordersure-spanb">￥<span th:text="${bookInfo.bookPrice}"></span></span>
+            <span class="Ordersure-spanb">x<span th:text="${bookNum}"></span></span>
+            <span class="Ordersure-spanb">￥<span th:text="${allPrice}"></span></span></p>
+        <p class="Ordersure-bottom">
+            订单总价：<span style="color: #c60023;">￥<span th:text="${allPrice}"></span></span>
+            <a class="btn search-btn" href="javascript:void(0)">提交订单</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

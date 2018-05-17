@@ -56,7 +56,7 @@ public class BookInfo {
     private Integer userId;
 
     /**
-     * 书籍状态 0-下架 1-上架
+     * 书籍状态 0-下架 1-上架 2-用户假性删除
      */
     @Column(name = "book_status")
     private Short bookStatus;

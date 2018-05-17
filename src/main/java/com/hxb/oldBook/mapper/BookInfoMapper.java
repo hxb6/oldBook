@@ -32,4 +32,25 @@ public interface BookInfoMapper extends Mapper<BookInfo> {
      */
     int getCountByUserId(@Param("tableParams") TableParams tableParams,
                          @Param("user") User user);
+
+    /**
+     * 首页获取售卖的书籍 已上架的书籍并且该书籍所属的用户账号未被冻结
+     *
+     * @return
+     */
+    List<BookInfo> getSellBook();
+
+    /**
+     * 根据书籍类查询售卖的书籍
+     * @param bookVarietyId
+     * @return
+     */
+    List<BookInfo> getSellBookByBookVariety(@Param("bookVarietyId") Integer bookVarietyId);
+
+    /**
+     * 根据书籍名称模糊查询售卖的书籍
+     * @param bookName
+     * @return
+     */
+    List<BookInfo> getSellBookLikeBookName(@Param("bookName") String bookName);
 }

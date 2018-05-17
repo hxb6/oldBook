@@ -3,7 +3,8 @@ package com.hxb.oldBook.pojo;
 import java.util.Date;
 import javax.persistence.*;
 
-public class Order {
+@Table(name = "book_order")
+public class BookOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

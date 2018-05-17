@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>首页</title>
+    <!--bootstrap的css-->
+    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <!--自定义css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+<!-- 头部 -->
+<div th:include="/fragment/header :: header"></div>
+<!--   ***************内容区***************   -->
+<div class="container" style="margin-top: 20px">
+
+    <!--面包屑-->
+    <div class="breadcrumb">
+        <li><a href="javascript:void(0)" onclick="window.location.href='/index'">首页></a><span class="divider"></span>
+        </li>
+        <li class="active">书籍详情</li>
+    </div>
+
+    <!-- 书籍详细信息 -->
+    <div class="Goodetails">
+        <div class="detailLeft">
+            <div class="detailLeft-top"><img th:src="${bookInfo.imgUrl}" class="mouseImg1"></div>
+        </div>
+        <div class="detailRight">
+            <input type="hidden" th:value="${bookInfo.id}" id="bookId">
+            <p class="detailRightfor">书籍名称：<span th:text="${bookInfo.bookName}"></span></p>
+            <p class="detailRightfor">书籍简介：<span th:text="${bookInfo.bookIntroduction}"></span></p>
+            <p class="detailRightfor">上架时间：<span th:text="${createDate}"></span></p>
+            <p class="detailRightthr">价格：<span>￥<span th:text="${bookInfo.bookPrice}">7000</span></span></p>
+            <p class="detailRightfor">库存：<span id="bookSave" th:text="${bookInfo.bookSave}"></span></p>
+            <p class="detailRightfor">数量：<span><input id="booKNum" type="number" th:max="${bookInfo.bookSave}"
+                                                      value="1"></span><span style="color: red" id="errorInfo"></span>
+            </p>
+            <button class="btn search-btn" onclick="goSettlement()">去结算</button>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function goSettlement() {
+        var bookNum = $("#booKNum").val();
+        var bookId = $("#bookId").val();
+        var bookSave = $("#bookSave").text();
+        if (bookNum == '' || bookNum < 1) {
+            $("#errorInfo").text("请填写正确的数量");
+            return false;
+        }
+        if (bookNum > bookSave) {
+            $("#errorInfo").text("库存不够");
+            return false;
+        }
+        window.location.href = "/book/toOrderSure?bookId=" + bookId + "&bookNum=" + bookNum;
+    }
+</script>
+</html>
