@@ -86,6 +86,7 @@
         FROM book_info AS b JOIN user AS u
         WHERE b.book_status = 1
         AND b.user_id = u.id
+        AND b.book_save > 0
         AND u.is_valid = 1
     </select>
 

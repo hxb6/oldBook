@@ -35,6 +35,15 @@ public class UserController {
     }
 
     /**
+     * 跳转到购买书籍订单页面
+     * @return
+     */
+    @RequestMapping("/toBuyOrder")
+    public String toBuyOrder(){
+        return "buyOrder";
+    }
+
+    /**
      * 进入修改密码页面
      * @return
      */

@@ -35,16 +35,31 @@
             <span class="Ordersure-spanb">数量</span>
             <span class="Ordersure-spanb">小计</span></p>
         <p class="Ordersure-spantwo">
+            <input type="hidden" id="bookId" th:value="${bookInfo.id}">
             <span class="Ordersure-spanc"><img
                     th:src="${bookInfo.imgUrl}"><span th:text="${bookInfo.bookIntroduction}"></span></span>
             <span class="Ordersure-spanb">￥<span th:text="${bookInfo.bookPrice}"></span></span>
-            <span class="Ordersure-spanb">x<span th:text="${bookNum}"></span></span>
+            <span class="Ordersure-spanb">x<span id="bookNum" th:text="${bookNum}"></span></span>
             <span class="Ordersure-spanb">￥<span th:text="${allPrice}"></span></span></p>
         <p class="Ordersure-bottom">
             订单总价：<span style="color: #c60023;">￥<span th:text="${allPrice}"></span></span>
-            <a class="btn search-btn" href="javascript:void(0)">提交订单</a>
+            <a class="btn search-btn" onclick="createOrder()" href="javascript:void(0)">提交订单</a>
         </p>
     </div>
 </div>
 </body>
+<script>
+    function createOrder() {
+        $.ajax({
+            url : "/book/createOrder",
+            data : {
+                "bookId" : $("#bookId").val(),
+                "bookNum" : $("#bookNum").text()
+            },
+            success : function () {
+                window.location.href = "/user/toBuyOrder";
+            }
+        });
+    }
+</script>
 </html>

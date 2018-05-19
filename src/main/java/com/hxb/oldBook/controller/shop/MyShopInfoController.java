@@ -21,4 +21,9 @@ public class MyShopInfoController {
     public String toBookAdd(){
         return "bookAdd";
     }
+
+    @RequestMapping("/toSellOrder")
+    public String toSellOrder(){
+        return "sellOrder";
+    }
 }

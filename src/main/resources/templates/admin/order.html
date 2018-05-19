@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 引入公共js和css -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>后台管理</title>
+    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/bootstrap-table/src/bootstrap-table.css}"/>
+    <link th:href="@{/chosen/chosen.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/norm.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/radio.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/bootstrap-table/src/bootstrap-table.js}"></script>
+    <script th:src="@{/bootstrap-table/src/locale/bootstrap-table-zh-CN.js}"></script>
+    <script th:src="@{/chosen/chosen.jquery.min.js}"></script>
+    <script th:src="@{/js/norm.js}"></script>
+    <script th:src="@{/myJs/dealApply.js}"></script>
+</head>
+
+<body>
+<!-- 公共顶部  -->
+<div th:replace="/fragment/admin/header :: header"></div>
+<div class="container">
+    <!--公共侧边栏-->
+    <div th:replace="/fragment/admin/sidebar :: sidebar"></div>
+    <!-- 内容-->
+    <div class="content">
+        <div class="content_head">
+            <span>商家请求信息处理</span>
+        </div>
+        <!--订单信息-->
+        <div class="table-overflow form-group informGoods">
+            <!-- 根据用户查询 -->
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <select class="form-control" id="target" onchange="refreshTable()">
+                    </select>
+                </div>
+            </div>
+            <table class="table media-table" id="table">
+                <thead>
+                <tr>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- 内容-->
+    </div>
+</div>
+
+
+</body>
+<!--申请处理维护-->
+<script>
+    /**
+     * 当前页面导航栏颜色变深
+     */
+    $("#dealOrder").addClass("activea");
+
+
+    /**
+     * 按用户查询订单
+     */
+    function refreshTable() {
+        $("#table").bootstrapTable("refresh");
+    }
+
+    /**
+     * 初始化bootstrap table数据
+     */
+    initTable();
+
+    getUserList();
+
+    /**
+     * 得到用户列表
+     */
+    function getUserList() {
+        $.ajax({
+            url: "/admin/getUserList",
+            async: false,
+            success: function (object) {
+                //清空下拉框 填充页面书籍下拉框
+                $("#target").empty();
+                $("#target").append("<option selected='selected' value='" + 0 + "'>按用户姓名查询</option>");
+                for (var dataKey in object.data) {
+                    $("#target").append("<option  value='" + object.data[dataKey].id + "'>" + object.data[dataKey].userName + "</option>");
+                }
+            }
+        });
+    }
+
+    /**
+     * 初始化bootstrap table并加载数据
+     */
+    function initTable() {
+        /**
+         * bootstrap table样式定义
+         */
+        var tableOrder = {
+            url: "/book/getAll",         //请求后台的URL（*）
+            method: "get",                      //请求方式（*）
+            toolbar: "#toolbar",                //工具按钮用哪个容器
+            undefinedText: "暂无简介",            //当数据为 undefined 时显示的字符
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式 client客户端分页 server服务端分页
+            sortable: true,                     //是否启用排序
+            sortName: "orderCreateTime",                 //默认排序字段
+            sortOrder: "desc",                   //默认排序方式
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 4,                       //每页的记录条数（*）
+            pageList: [4, 10, 20, 50],        //可供选择的每页的行数（*）
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            paginationPreText: "上一页",
+            paginationNextText: "下一页",
+            formatNoMatches: function () {
+                return "暂无订单信息...";
+            },
+            queryParams: function (params) {    //查询参数
+                var temp = {
+                    offset: params.offset,
+                    limit: params.limit,
+                    sortName: this.sortName,
+                    sortOrder: this.sortOrder,
+                    state : 0,
+                    target: $("#target").val() == '' ? 0 : $("#target").val()
+                };
+                return temp;
+            },
+            columns: [
+                {
+                    title: "序号",
+                    align: "center",
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    },
+                },
+                {
+                    title: "订单号",
+                    align: "center",
+                    field: "id",
+                },
+                {
+                    title: "书籍名称",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var bookName;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                bookName = object.data.bookName;
+                            }
+                        });
+                        return bookName;
+                    }
+                },
+                {
+                    title: "书籍图片",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var html;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                var url = "/" + object.data.imgUrl;
+                                html = '<img style="width: 74px;height: 74px" src="' + url + '">';
+                            }
+                        });
+                        return html;
+                    }
+                },
+                {
+                    title: "书籍单价",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var bookPrice;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                bookPrice = object.data.bookPrice;
+                            }
+                        });
+                        return bookPrice;
+                    }
+                },
+                {
+                    title: "书籍数量",
+                    align: "center",
+                    field: "num",
+                    sortable: true
+                },
+                {
+                    title: "订单总价",
+                    align: "center",
+                    field: "money",
+                    sortable: true
+                },
+                {
+                    title: "创建时间",
+                    align: "center",
+                    field: "orderCreateTime",
+                    sortable: true
+                },
+                {
+                    title: "订单状态",
+                    align: "center",
+                    field: "status",
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return row.status == 0 ? "未支付" : "已支付";
+                    }
+                },
+                {
+                    title: '操作',
+                    align: "center",
+                    formatter: function (value, row, index) {
+                        var html;
+                        if(row.status == 0){
+                            html = '<a href="">去支付</a>';
+                        } else {
+                            html = '<a href="">确认收货</a>';
+                        }
+                        return html;
+                    }
+                }
+            ]
+        };
+        $("#table").bootstrapTable(tableOrder);
+    }
+
+</script>
+</html>

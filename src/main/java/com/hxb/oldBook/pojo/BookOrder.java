@@ -1,8 +1,12 @@
 package com.hxb.oldBook.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import javax.persistence.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "book_order")
 public class BookOrder {
     @Id
@@ -28,14 +32,31 @@ public class BookOrder {
     private Integer bookId;
 
     /**
+     * 该条订单总价
+     */
+    private Double money;
+
+    /**
+     * 订单状态 0-未支付 1-已支付 2-已完成
+     */
+    private Integer status;
+
+    /**
+     * 购买的书籍数量
+     */
+    private Integer num;
+
+    /**
      * 订单创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     @Column(name = "order_create_time")
     private Date orderCreateTime;
 
     /**
      * 订单最近修改时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     @Column(name = "order_modified_time")
     private Date orderModifiedTime;
 
@@ -105,6 +126,60 @@ public class BookOrder {
      */
     public void setBookId(Integer bookId) {
         this.bookId = bookId;
+    }
+
+    /**
+     * 获取该条订单总价
+     *
+     * @return money - 该条订单总价
+     */
+    public Double getMoney() {
+        return money;
+    }
+
+    /**
+     * 设置该条订单总价
+     *
+     * @param money 该条订单总价
+     */
+    public void setMoney(Double money) {
+        this.money = money;
+    }
+
+    /**
+     * 获取订单状态 0-未支付 1-已支付 2-已完成
+     *
+     * @return status - 订单状态 0-未支付 1-已支付 2-已完成
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置订单状态 0-未支付 1-已支付 2-已完成
+     *
+     * @param status 订单状态 0-未支付 1-已支付 2-已完成
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取购买的书籍数量
+     *
+     * @return num - 购买的书籍数量
+     */
+    public Integer getNum() {
+        return num;
+    }
+
+    /**
+     * 设置购买的书籍数量
+     *
+     * @param num 购买的书籍数量
+     */
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     /**

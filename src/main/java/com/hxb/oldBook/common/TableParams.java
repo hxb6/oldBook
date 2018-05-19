@@ -35,6 +35,11 @@ public class TableParams<T> {
      */
     private T target;
 
+    /**
+     * 购买订单还是售卖订单 0-购买订单 1-售卖订单
+     */
+    private int state;
+
     public Integer getOffset() {
         return offset;
     }
@@ -75,14 +80,12 @@ public class TableParams<T> {
         this.target = target;
     }
 
-    @Override
-    public String toString() {
-        return "TableParams{" +
-                "offset=" + offset +
-                ", limit=" + limit +
-                ", sortName='" + sortName + '\'' +
-                ", sortOrder='" + sortOrder + '\'' +
-                ", target=" + target +
-                '}';
+    public int getState() {
+        return state;
     }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
 }

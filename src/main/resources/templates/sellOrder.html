@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>个人中心</title>
+    <!--bootstrap的css-->
+    <link th:href="@{/bootstrap/dist/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/bootstrap-table/src/bootstrap-table.css}"/>
+    <!--自定义css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <!--解决IE兼容-->
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script th:src="@{/js/jquery-3.1.1.js}"></script>
+    <!--bootstrap的js-->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <script th:src="@{/bootstrap-table/src/bootstrap-table.js}"></script>
+    <script th:src="@{/bootstrap-table/src/locale/bootstrap-table-zh-CN.js}"></script>
+    <!-- 我是商家公共js -->
+    <script th:src="@{/myJs/shopCommon.js}"></script>
+</head>
+<body>
+<!-- 公共头部 -->
+<div th:replace="fragment/header :: header"></div>
+<div class="container" style="margin-top: 20px">
+    <!-- 个人中心公共标签式导航栏 -->
+    <ul th:replace="fragment/shopSidebar :: shopSidebar"></ul>
+
+    <!-- 内容显示区 -->
+    <div class="content">
+        <!--售卖书籍订单div-->
+        <div class="table-overflow form-group informGoods">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <input class="form-control" id="target">
+                </div>
+            </div>
+            <table id="table" class="table media-table">
+                <thead>
+                <tr>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+<script>
+
+    /**
+     * 导航栏颜色变白
+     */
+    $("#bookSell").addClass("active");
+
+    initTable()
+
+    /**
+     * 初始化bootstrap table并加载数据
+     */
+    function initTable() {
+        /**
+         * bootstrap table样式定义
+         */
+        var tableOrder = {
+            url: "/book/getOrder",         //请求后台的URL（*）
+            method: "get",                      //请求方式（*）
+            toolbar: "#toolbar",                //工具按钮用哪个容器
+            undefinedText: "暂无简介",            //当数据为 undefined 时显示的字符
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式 client客户端分页 server服务端分页
+            sortable: true,                     //是否启用排序
+            sortName: "orderCreateTime",                 //默认排序字段
+            sortOrder: "desc",                   //默认排序方式
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 4,                       //每页的记录条数（*）
+            pageList: [4, 10, 20, 50],        //可供选择的每页的行数（*）
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            paginationPreText: "上一页",
+            paginationNextText: "下一页",
+            formatNoMatches: function () {
+                return "暂无售卖书籍订单...";
+            },
+            queryParams: function (params) {    //查询参数
+                var temp = {
+                    offset: params.offset,
+                    limit: params.limit,
+                    sortName: this.sortName,
+                    sortOrder: this.sortOrder,
+                    state : 1,
+                    target: $("#target").val() == '' ? 0 : $("#target").val()
+                };
+                return temp;
+            },
+            columns: [
+                {
+                    title: "序号",
+                    align: "center",
+                    formatter: function (value, row, index) {
+                        return index + 1;
+                    },
+                },
+                {
+                    title: "订单号",
+                    align: "center",
+                    field: "id",
+                },
+                {
+                    title: "书籍名称",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var bookName;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                bookName = object.data.bookName;
+                            }
+                        });
+                        return bookName;
+                    }
+                },
+                {
+                    title: "书籍图片",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var html;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                var url = "/" + object.data.imgUrl;
+                                html = '<img style="width: 74px;height: 74px" src="' + url + '">';
+                            }
+                        });
+                        return html;
+                    }
+                },
+                {
+                    title: "书籍单价",
+                    align: "center",
+                    field: "",
+                    formatter : function (value,row,index) {
+                        var bookPrice;
+                        $.ajax({
+                            url : "/book/getBookById",
+                            async : false,
+                            data : {
+                                "id" : row.bookId
+                            },
+                            success : function (object) {
+                                bookPrice = object.data.bookPrice;
+                            }
+                        });
+                        return bookPrice;
+                    }
+                },
+                {
+                    title: "书籍数量",
+                    align: "center",
+                    field: "num",
+                    sortable: true
+                },
+                {
+                    title: "订单总价",
+                    align: "center",
+                    field: "money",
+                    sortable: true
+                },
+                {
+                    title: "创建时间",
+                    align: "center",
+                    field: "orderCreateTime",
+                    sortable: true
+                },
+                {
+                    title: "订单状态",
+                    align: "center",
+                    field: "status",
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return row.status == 0 ? "未支付" : "已支付";
+                    }
+                },
+                {
+                    title: '操作',
+                    align: "center",
+                    formatter: function (value, row, index) {
+                        var html;
+                        if(row.status == 0){
+                            html = '<a href="">提醒付款</a>';
+                        } else {
+                            html = '<a href="">发货</a>';
+                        }
+                        return html;
+                    }
+                }
+            ]
+        };
+        $("#table").bootstrapTable(tableOrder);
+    }
+
+
+</script>
+</html>

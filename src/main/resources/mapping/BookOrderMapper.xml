@@ -9,7 +9,74 @@
     <result column="seller_id" jdbcType="INTEGER" property="sellerId" />
     <result column="buyers_id" jdbcType="INTEGER" property="buyersId" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="num" jdbcType="INTEGER" property="num" />
     <result column="order_create_time" jdbcType="TIMESTAMP" property="orderCreateTime" />
     <result column="order_modified_time" jdbcType="TIMESTAMP" property="orderModifiedTime" />
   </resultMap>
+
+    <select id="queryOrder" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_order
+        WHERE #{user.id} =
+        <choose>
+            <when test="tableParams.state == 0">
+                buyers_id
+            </when>
+            <otherwise>
+                seller_id
+            </otherwise>
+        </choose>
+        <if test="tableParams.target != 0">
+            AND id = #{tableParams.target}
+        </if>
+        ORDER BY
+        <choose>
+            <when test="tableParams.sortName != null and tableParams.sortName != '' and tableParams.sortOrder != null and tableParams.sortOrder != ''">
+                ${tableParams.sortName} ${tableParams.sortOrder}
+            </when>
+            <otherwise>
+                apply_time DESC
+            </otherwise>
+        </choose>
+        LIMIT #{tableParams.offset},#{tableParams.limit}
+    </select>
+
+    <select id="getOrderCount" resultType="integer">
+        SELECT COUNT(*)
+        FROM book_order
+        WHERE #{user.id} =
+        <choose>
+            <when test="tableParams.state == 0">
+                buyers_id
+            </when>
+            <otherwise>
+                seller_id
+            </otherwise>
+        </choose>
+        <if test="tableParams.target != 0">
+            AND id = #{tableParams.target}
+        </if>
+    </select>
+
+
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT *
+        FROM book_order
+        <if test="tableParams.target != 0">
+            WHERE seller_id = #{tableParams.target}
+            OR buyers_id = #{tableParams.target}
+        </if>
+        ORDER BY
+        <choose>
+            <when test="tableParams.sortName != null and tableParams.sortName != '' and tableParams.sortOrder != null and tableParams.sortOrder != ''">
+                ${tableParams.sortName} ${tableParams.sortOrder}
+            </when>
+            <otherwise>
+                apply_time DESC
+            </otherwise>
+        </choose>
+        LIMIT #{tableParams.offset},#{tableParams.limit}
+    </select>
 </mapper>

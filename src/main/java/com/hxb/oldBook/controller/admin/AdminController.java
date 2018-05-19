@@ -45,4 +45,9 @@ public class AdminController {
     public String toUserList(){
         return "admin/userList";
     }
+
+    @RequestMapping("/toOrder")
+    public String toOrder(){
+        return "admin/order";
+    }
 }
