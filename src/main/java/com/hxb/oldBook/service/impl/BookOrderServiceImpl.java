@@ -43,7 +43,6 @@ public class BookOrderServiceImpl extends BaseServiceImpl<BookOrder> implements 
     @Transactional
     @Override
     public void createOrder(Integer bookId, Integer bookNum) {
-        System.out.println("书籍数量  "+bookNum);
         //获取书籍
         BookInfo bookInfo = bookInfoMapper.selectByPrimaryKey(bookId);
         //获取售卖商家

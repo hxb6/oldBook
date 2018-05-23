@@ -20,8 +20,8 @@
     <script th:src="@{/myJs/index.js}"></script>
 </head>
 <body>
-<!-- 头部 -->
-<div th:include="/fragment/header :: header"></div>
+<!-- 公共头部 -->
+<div th:replace="fragment/header :: header"></div>
 <!--   ***************内容区***************   -->
 <div class="container">
     <div class="search-box clearfix">

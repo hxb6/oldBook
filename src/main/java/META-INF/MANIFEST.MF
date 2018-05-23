@@ -1,33 +1,33 @@
 Manifest-Version: 1.0
-Class-Path: mysql-connector-java-5.1.35.jar slf4j-api-1.7.25.jar tomca
- t-embed-websocket-8.5.28.jar tools.jar jackson-datatype-jsr310-2.9.4.
- jar snakeyaml-1.19.jar spring-boot-starter-thymeleaf-2.0.0.RELEASE.ja
- r jul-to-slf4j-1.7.25.jar jackson-module-parameter-names-2.9.4.jar sp
- ring-boot-starter-json-2.0.0.RELEASE.jar spring-boot-autoconfigure-2.
- 0.0.RELEASE.jar spring-web-5.0.4.RELEASE.jar mybatis-spring-boot-star
- ter-1.3.0.jar druid-1.0.11.jar druid-spring-boot-starter-1.1.0.jar sp
- ring-jcl-5.0.4.RELEASE.jar persistence-api-1.0.jar spring-boot-starte
- r-jdbc-2.0.0.RELEASE.jar attoparser-2.0.4.RELEASE.jar logback-classic
- -1.2.3.jar validation-api-2.0.1.Final.jar thymeleaf-3.0.9.RELEASE.jar
-  jconsole.jar mapper-spring-boot-starter-2.0.0.jar spring-context-5.0
- .4.RELEASE.jar spring-boot-starter-2.0.0.RELEASE.jar mapper-weekend-1
- .1.3.jar thymeleaf-extras-java8time-3.0.1.RELEASE.jar aspectjweaver-1
- .8.13.jar jackson-datatype-jdk8-2.9.4.jar unbescape-1.1.5.RELEASE.jar
-  spring-tx-5.0.4.RELEASE.jar mybatis-spring-1.3.1.jar spring-beans-5.
- 0.4.RELEASE.jar spring-aop-5.0.4.RELEASE.jar javax.annotation-api-1.3
- .2.jar mapper-core-1.0.0.jar spring-boot-2.0.0.RELEASE.jar log4j-api-
- 2.10.0.jar mapper-base-1.0.0.jar tomcat-embed-core-8.5.28.jar spring-
- core-5.0.4.RELEASE.jar spring-jdbc-5.0.4.RELEASE.jar jackson-core-2.9
- .4.jar mapper-spring-1.0.0.jar classmate-1.3.4.jar spring-boot-starte
- r-logging-2.0.0.RELEASE.jar spring-boot-devtools-2.0.0.RELEASE.jar lo
- g4j-to-slf4j-2.10.0.jar jboss-logging-3.3.2.Final.jar tomcat-embed-el
- -8.5.28.jar spring-webmvc-5.0.4.RELEASE.jar HikariCP-2.7.8.jar spring
- -boot-starter-tomcat-2.0.0.RELEASE.jar jackson-annotations-2.9.0.jar 
- mybatis-spring-boot-autoconfigure-1.3.0.jar spring-expression-5.0.4.R
- ELEASE.jar logback-core-1.2.3.jar mybatis-3.4.4.jar hibernate-validat
- or-6.0.7.Final.jar spring-boot-starter-web-2.0.0.RELEASE.jar jackson-
- databind-2.9.4.jar mapper-spring-boot-autoconfigure-2.0.0.jar thymele
- af-spring5-3.0.9.RELEASE.jar spring-boot-starter-aop-2.0.0.RELEASE.ja
+Class-Path: spring-jcl-5.0.4.RELEASE.jar spring-boot-starter-json-2.0.
+ 0.RELEASE.jar spring-jdbc-5.0.4.RELEASE.jar jackson-module-parameter-
+ names-2.9.4.jar mapper-base-1.0.0.jar spring-webmvc-5.0.4.RELEASE.jar
+  mapper-spring-1.0.0.jar spring-boot-starter-aop-2.0.0.RELEASE.jar ja
+ ckson-core-2.9.4.jar druid-1.0.11.jar jackson-datatype-jdk8-2.9.4.jar
+  classmate-1.3.4.jar spring-beans-5.0.4.RELEASE.jar spring-boot-start
+ er-thymeleaf-2.0.0.RELEASE.jar thymeleaf-3.0.9.RELEASE.jar log4j-to-s
+ lf4j-2.10.0.jar jconsole.jar tomcat-embed-websocket-8.5.28.jar spring
+ -expression-5.0.4.RELEASE.jar log4j-api-2.10.0.jar validation-api-2.0
+ .1.Final.jar snakeyaml-1.19.jar spring-boot-starter-jdbc-2.0.0.RELEAS
+ E.jar spring-boot-starter-tomcat-2.0.0.RELEASE.jar spring-tx-5.0.4.RE
+ LEASE.jar HikariCP-2.7.8.jar spring-context-5.0.4.RELEASE.jar mapper-
+ spring-boot-autoconfigure-2.0.0.jar spring-boot-devtools-2.0.0.RELEAS
+ E.jar slf4j-api-1.7.25.jar mybatis-spring-boot-starter-1.3.0.jar spri
+ ng-boot-2.0.0.RELEASE.jar spring-boot-starter-2.0.0.RELEASE.jar tools
+ .jar mapper-core-1.0.0.jar thymeleaf-spring5-3.0.9.RELEASE.jar mybati
+ s-spring-boot-autoconfigure-1.3.0.jar attoparser-2.0.4.RELEASE.jar sp
+ ring-boot-starter-web-2.0.0.RELEASE.jar jboss-logging-3.3.2.Final.jar
+  jackson-datatype-jsr310-2.9.4.jar mybatis-spring-1.3.1.jar hibernate
+ -validator-6.0.7.Final.jar mapper-spring-boot-starter-2.0.0.jar unbes
+ cape-1.1.5.RELEASE.jar tomcat-embed-el-8.5.28.jar logback-core-1.2.3.
+ jar persistence-api-1.0.jar jul-to-slf4j-1.7.25.jar spring-boot-autoc
+ onfigure-2.0.0.RELEASE.jar javax.annotation-api-1.3.2.jar aspectjweav
+ er-1.8.13.jar druid-spring-boot-starter-1.1.0.jar thymeleaf-extras-ja
+ va8time-3.0.1.RELEASE.jar spring-aop-5.0.4.RELEASE.jar jackson-annota
+ tions-2.9.0.jar mybatis-3.4.4.jar spring-web-5.0.4.RELEASE.jar jackso
+ n-databind-2.9.4.jar spring-core-5.0.4.RELEASE.jar mapper-weekend-1.1
+ .3.jar mysql-connector-java-5.1.35.jar tomcat-embed-core-8.5.28.jar s
+ pring-boot-starter-logging-2.0.0.RELEASE.jar logback-classic-1.2.3.ja
  r
 Main-Class: com.hxb.oldBook.OldbookApplication
 
