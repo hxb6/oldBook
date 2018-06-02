@@ -6,7 +6,7 @@ server:
     #context-path: /oldBook
 
 #文件上传路径
-upload-path: D:/毕业设计/upload/images/
+upload-path: C:/upload/images/
 
 spring:
     #静态资源配置
